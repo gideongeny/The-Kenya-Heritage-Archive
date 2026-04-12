@@ -29,7 +29,6 @@ fun TimelineScrubber(
     var offset by remember { mutableStateOf(0f) }
     val scrollState = rememberScrollableState { delta ->
         offset += delta
-        val totalYears = range.last - range.first
         val yearDelta = (delta / 10).toInt() // Sensitivity
         val newYear = (currentYear - yearDelta).coerceIn(range.first, range.last)
         if (newYear != currentYear) onYearChanged(newYear)

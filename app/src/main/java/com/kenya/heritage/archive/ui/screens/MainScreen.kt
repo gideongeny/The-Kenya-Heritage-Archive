@@ -304,7 +304,7 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?) {
                 if (!artifact?.decadeDescription.isNullOrBlank()) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = artifact.decadeDescription,
+                        text = artifact?.decadeDescription ?: "",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.White.copy(alpha = 0.75f),
                         maxLines = 2,
@@ -535,7 +535,7 @@ fun ArtifactCard(
                                 )
                                 Spacer(modifier = Modifier.height(6.dp))
                                 Text(
-                                    text = artifact.foreignerTips!!,
+                                    text = artifact.foreignerTips,
                                     style = MaterialTheme.typography.bodySmall,
                                     color = Color.LightGray
                                 )

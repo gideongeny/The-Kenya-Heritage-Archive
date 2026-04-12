@@ -163,8 +163,13 @@ fun VaultGallery(
                         fontWeight = FontWeight.Bold
                     )
                     Text(
-                        artifact.significantEvent!!,
+                        artifact.significantEvent,
                         style = MaterialTheme.typography.bodyMedium,
+                        color = Color.LightGray
+                    )
+                    Text(
+                        text = artifact.foreignerTips,
+                        style = MaterialTheme.typography.bodySmall,
                         color = Color.LightGray
                     )
                 }
