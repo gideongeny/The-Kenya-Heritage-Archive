@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kenya Heritage Archive</string>
+    <string name="action_privacy">Privacy</string>
+    <string name="action_search">Search</string>
+    <string name="action_share">Share</string>
+    
+    <!-- Main Screen -->
+    <string name="label_era_of_the_day">ERA OF THE DAY</string>
+    <string name="label_foreigners_guide">🌍  FOREIGNER\'S GUIDE</string>
+    <string name="action_enter_the_vault">ENTER THE VAULT</string>
+    <string name="share_text_prefix">Discover Kenya\'s History 🇰🇪\n\n%1$s (%2$d)\n\n%3$s\n\nExplore more on the Kenya Heritage Archive app!</string>
+    <string name="share_chooser_title">Share artifact to...</string>
+    
+    <!-- Decade Galleries -->
+    <string name="label_archival_photos">Archival Photos of the %1$ds</string>
+    <string name="label_annual_chronicles">Annual Chronicles of the %1$ds</string>
+    
+    <!-- Search Screen -->
+    <string name="search_placeholder">Search places, people, events...</string>
+    <string name="search_empty_title">Search the Archive</string>
+    <string name="search_empty_desc">Find artifacts by title, location, or story</string>
+    <string name="search_no_results_title">No artifacts found</string>
+    <string name="search_no_results_desc">Try searching for another keyword or location.</string>
+    <string name="search_results_count">Found %1$d results</string>
 </resources>

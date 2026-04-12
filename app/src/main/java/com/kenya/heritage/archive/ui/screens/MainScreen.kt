@@ -24,7 +24,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.kenya.heritage.archive.R
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -57,7 +59,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {})
                 TopAppBar(
                     title = {
                         Text(
-                            "Kenya Heritage Archive",
+                            stringResource(R.string.app_name),
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -271,7 +273,7 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
                     shape = MaterialTheme.shapes.extraSmall
                 ) {
                     Text(
-                        text = "ERA OF THE DAY",
+                        text = stringResource(R.string.label_era_of_the_day),
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
@@ -516,7 +518,7 @@ fun ArtifactCard(
                         ) {
                             Column(modifier = Modifier.padding(12.dp)) {
                                 Text(
-                                    text = "🌍  FOREIGNER'S GUIDE",
+                                    text = stringResource(R.string.label_foreigners_guide),
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.ExtraBold,
@@ -539,15 +541,15 @@ fun ArtifactCard(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         IconButton(onClick = {
+                            val sharePrefix = context.getString(R.string.share_text_prefix, artifact.title, artifact.year, artifact.deepNarrative)
+                            val chooserTitle = context.getString(R.string.share_chooser_title)
+                            
                             val sendIntent = android.content.Intent().apply {
                                 action = android.content.Intent.ACTION_SEND
-                                putExtra(
-                                    android.content.Intent.EXTRA_TEXT,
-                                    "Discover Kenya's History 🇰🇪\n\n${artifact.title} (${artifact.year})\n\n${artifact.deepNarrative}\n\nExplore more on the Kenya Heritage Archive app!"
-                                )
+                                putExtra(android.content.Intent.EXTRA_TEXT, sharePrefix)
                                 type = "text/plain"
                             }
-                            context.startActivity(android.content.Intent.createChooser(sendIntent, "Share artifact to..."))
+                            context.startActivity(android.content.Intent.createChooser(sendIntent, chooserTitle))
                         }) {
                             Icon(
                                 imageVector = Icons.Default.Share,
@@ -569,7 +571,7 @@ fun ArtifactCard(
                                 modifier = Modifier.size(16.dp)
                             )
                             Spacer(modifier = Modifier.width(6.dp))
-                            Text("ENTER THE VAULT")
+                            Text(stringResource(R.string.action_enter_the_vault))
                         }
                     }
                 }
@@ -590,7 +592,7 @@ fun DecadeMediaSection(
     Column(modifier = Modifier.fillMaxWidth()) {
         if (photos.isNotEmpty()) {
             Text(
-                text = "Archival Photos of the ${decade}s",
+                text = stringResource(R.string.label_archival_photos, decade),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp
@@ -608,7 +610,7 @@ fun DecadeMediaSection(
         
         if (videos.isNotEmpty()) {
             Text(
-                text = "Annual Chronicles of the ${decade}s",
+                text = stringResource(R.string.label_annual_chronicles, decade),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
                     letterSpacing = 1.sp

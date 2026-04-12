@@ -16,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import com.kenya.heritage.archive.R
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,7 +45,7 @@ fun SearchScreen(
                         TextField(
                             value = searchQuery,
                             onValueChange = { viewModel.onSearchQueryChanged(it) },
-                            placeholder = { Text("Search places, people, events...") },
+                            placeholder = { Text(stringResource(R.string.search_placeholder)) },
                             singleLine = true,
                             colors = TextFieldDefaults.colors(
                                 focusedContainerColor = Color.Transparent,
@@ -98,13 +100,13 @@ fun SearchScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "Search the Archive",
+                            text = stringResource(R.string.search_empty_title),
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.Gray
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Find artifacts by title, location, or story",
+                            text = stringResource(R.string.search_empty_desc),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Gray.copy(alpha = 0.8f)
                         )
@@ -117,12 +119,12 @@ fun SearchScreen(
                         verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "No artifacts found",
+                            text = stringResource(R.string.search_no_results_title),
                             style = MaterialTheme.typography.titleMedium,
                             color = Color.Gray
                         )
                         Text(
-                            text = "Try searching for another keyword or location.",
+                            text = stringResource(R.string.search_no_results_desc),
                             style = MaterialTheme.typography.bodyMedium,
                             color = Color.Gray.copy(alpha = 0.8f)
                         )
@@ -136,7 +138,7 @@ fun SearchScreen(
                     ) {
                         item {
                             Text(
-                                text = "Found ${searchResults.size} results",
+                                text = stringResource(R.string.search_results_count, searchResults.size),
                                 style = MaterialTheme.typography.labelMedium,
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Bold,

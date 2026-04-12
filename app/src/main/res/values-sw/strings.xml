@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Kumbukumbu ya Urithi wa Kenya</string>
+    <string name="action_privacy">Faragha</string>
+    <string name="action_search">Tafuta</string>
+    <string name="action_share">Shiriki</string>
+    
+    <!-- Main Screen -->
+    <string name="label_era_of_the_day">ENZI YA SIKU LEO</string>
+    <string name="label_foreigners_guide">🌍  MWELEKEO KWA WAGENI</string>
+    <string name="action_enter_the_vault">INGIA KWENYE HAZINA</string>
+    <string name="share_text_prefix">Gundua Historia ya Kenya 🇰🇪\n\n%1$s (%2$d)\n\n%3$s\n\nGundua mengi kwenye programu ya Kumbukumbu ya Urithi wa Kenya!</string>
+    <string name="share_chooser_title">Shiriki wasifu huu kwa...</string>
+    
+    <!-- Decade Galleries -->
+    <string name="label_archival_photos">Picha za Kumbukumbu miaka ya %1$ds</string>
+    <string name="label_annual_chronicles">Matukio ya Kila Mwaka miaka ya %1$ds</string>
+    
+    <!-- Search Screen -->
+    <string name="search_placeholder">Tafuta maeneo, watu, matukio...</string>
+    <string name="search_empty_title">Tafuta Kwenye Hazina</string>
+    <string name="search_empty_desc">Pata matukio kwa jina, mahali, au hadithi</string>
+    <string name="search_no_results_title">Hakuna historia iliyopatikana</string>
+    <string name="search_no_results_desc">Jaribu kutafuta kwa neno lingine au eneo.</string>
+    <string name="search_results_count">Tumepata matokeo %1$d</string>
+</resources>
