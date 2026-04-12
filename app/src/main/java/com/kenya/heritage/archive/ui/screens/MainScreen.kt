@@ -52,9 +52,11 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
     val syncProgress by viewModel.syncManager.syncProgress.collectAsState()
     
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
     var showMenu by remember { mutableStateOf(false) }
+    var showLanguageSubMenu by remember { mutableStateOf(false) }
 
     var selectedArtifactForVault by remember { mutableStateOf<HistoricalArtifact?>(null) }
 
@@ -99,7 +101,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                             ) {
                                 // Map
                                 DropdownMenuItem(
-                                    text = { Text("🗺️  Heritage Map") },
+                                    text = { Text(stringResource(R.string.menu_heritage_map)) },
                                     onClick = {
                                         showMenu = false
                                         onNavigateToMap()
@@ -111,7 +113,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                 // Download Archive
                                 if (!isSyncing) {
                                     DropdownMenuItem(
-                                        text = { Text("☁️  Download Archive Offline") },
+                                        text = { Text(stringResource(R.string.menu_download_archive)) },
                                         onClick = {
                                             showMenu = false
                                             scope.launch {
@@ -124,9 +126,34 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                     )
                                 } else {
                                     DropdownMenuItem(
-                                        text = { Text("Syncing… ${(syncProgress * 100).toInt()}%") },
+                                        text = { Text(stringResource(R.string.menu_download_syncing, (syncProgress * 100).toInt())) },
                                         onClick = { showMenu = false },
                                         enabled = false
+                                    )
+                                }
+                                // Language switcher
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.menu_language)) },
+                                    onClick = { showLanguageSubMenu = !showLanguageSubMenu }
+                                )
+                                if (showLanguageSubMenu) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.menu_language_english)) },
+                                        onClick = {
+                                            showMenu = false
+                                            showLanguageSubMenu = false
+                                            com.kenya.heritage.archive.data.util.LanguageManager.setLanguage(context, com.kenya.heritage.archive.data.util.LanguageManager.LANG_ENGLISH)
+                                        },
+                                        modifier = Modifier.padding(start = 16.dp)
+                                    )
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.menu_language_swahili)) },
+                                        onClick = {
+                                            showMenu = false
+                                            showLanguageSubMenu = false
+                                            com.kenya.heritage.archive.data.util.LanguageManager.setLanguage(context, com.kenya.heritage.archive.data.util.LanguageManager.LANG_SWAHILI)
+                                        },
+                                        modifier = Modifier.padding(start = 16.dp)
                                     )
                                 }
                                 HorizontalDivider()
@@ -137,7 +164,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                             verticalAlignment = Alignment.CenterVertically,
                                             horizontalArrangement = Arrangement.spacedBy(8.dp)
                                         ) {
-                                            Text("🌍  Foreigner's Guide")
+                                            Text(stringResource(R.string.menu_foreigners_guide))
                                             Spacer(modifier = Modifier.weight(1f))
                                             Switch(
                                                 checked = isForeignerGuideEnabled,
@@ -152,7 +179,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                 )
                                 // Privacy Policy
                                 DropdownMenuItem(
-                                    text = { Text("🔒  Privacy Policy") },
+                                    text = { Text(stringResource(R.string.menu_privacy_policy)) },
                                     onClick = {
                                         showMenu = false
                                         showPrivacyPolicy = true
@@ -199,12 +226,12 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Downloading Archive to Vault...",
+                                text = stringResource(R.string.label_downloading_vault),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.primary
                             )
                             Text(
-                                text = "${(syncProgress * 100).toInt()}%",
+                                text = stringResource(R.string.label_syncing_progress, (syncProgress * 100).toInt()),
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
@@ -255,13 +282,13 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                     Text(
-                                        "Scroll the timeline to explore Kenya's history",
+                                        text = stringResource(R.string.label_scroll_to_explore),
                                         style = MaterialTheme.typography.bodyLarge,
                                         color = Color.Gray
                                     )
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Text(
-                                        "From the 11th Century to 2026",
+                                        text = stringResource(R.string.label_timeline_range),
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
                                     )
@@ -271,7 +298,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                     } else {
                         item {
                             Text(
-                                text = "Events around ${uiState.currentYear}",
+                                text = stringResource(R.string.label_events_around, uiState.currentYear),
                                 style = MaterialTheme.typography.titleLarge,
                                 color = MaterialTheme.colorScheme.primary
                             )

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.kenya.heritage.archive.R
@@ -48,7 +49,7 @@ fun MapScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text("Geographic Heritage Map", color = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.map_screen_title), color = MaterialTheme.colorScheme.primary)
                     },
                     navigationIcon = {
                         IconButton(onClick = onBack) {

@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -34,6 +35,7 @@ import com.kenya.heritage.archive.data.model.AssetType
 import com.kenya.heritage.archive.data.model.HistoricalArtifact
 import com.kenya.heritage.archive.data.model.MediaAsset
 import com.kenya.heritage.archive.media.VideoCacheManager
+import com.kenya.heritage.archive.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -80,7 +82,7 @@ fun VaultGallery(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "No media assets found in the vault for this era.",
+                        stringResource(R.string.error_no_media),
                         color = Color.Gray,
                         style = MaterialTheme.typography.bodyMedium
                     )
@@ -160,7 +162,7 @@ fun VaultGallery(
                 if (!artifact.significantEvent.isNullOrBlank()) {
                     Spacer(modifier = Modifier.height(24.dp))
                     Text(
-                        "SIGNIFICANT EVENT",
+                        stringResource(R.string.label_significant_event),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
@@ -239,7 +241,7 @@ fun AudioPlayer(asset: MediaAsset) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Oral History Recording",
+            stringResource(R.string.label_oral_history),
             style = MaterialTheme.typography.titleMedium,
             color = Color.White
         )

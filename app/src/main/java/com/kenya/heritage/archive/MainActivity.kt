@@ -1,7 +1,7 @@
 package com.kenya.heritage.archive
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,11 +19,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.foundation.background
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private val viewModel: HistoryViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Apply stored language before super.onCreate
+        com.kenya.heritage.archive.data.util.LanguageManager.applyStoredLanguage(this)
+        
         super.onCreate(savedInstanceState)
         // Enable edge-to-edge display for the cinematic experience
         WindowCompat.setDecorFitsSystemWindows(window, false)

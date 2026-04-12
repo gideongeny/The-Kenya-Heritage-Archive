@@ -4,7 +4,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.kenya.heritage.archive.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,13 +22,13 @@ fun ContributionPortal() {
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = "Preserve Your History",
+            text = stringResource(R.string.contribution_title),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.primary
         )
 
         Text(
-            text = "Contribute your community's oral traditions and rare documents to the national archive.",
+            text = stringResource(R.string.contribution_desc),
             style = MaterialTheme.typography.bodyMedium,
             color = androidx.compose.ui.graphics.Color.LightGray
         )
@@ -34,7 +36,7 @@ fun ContributionPortal() {
         OutlinedTextField(
             value = title,
             onValueChange = { title = it },
-            label = { Text("Story Title") },
+            label = { Text(stringResource(R.string.label_story_title)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -42,7 +44,7 @@ fun ContributionPortal() {
         OutlinedTextField(
             value = era,
             onValueChange = { era = it },
-            label = { Text("Relevant Era or Year") },
+            label = { Text(stringResource(R.string.label_relevant_era)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -50,7 +52,7 @@ fun ContributionPortal() {
         OutlinedTextField(
             value = story,
             onValueChange = { story = it },
-            label = { Text("The Narrative / Oral History") },
+            label = { Text(stringResource(R.string.label_narrative)) },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
@@ -65,7 +67,7 @@ fun ContributionPortal() {
             )
         ) {
             Text(
-                "UPLOAD TO THE ARCHIVE",
+                stringResource(R.string.action_upload_archive),
                 color = MaterialTheme.colorScheme.onPrimary
             )
         }
@@ -74,7 +76,7 @@ fun ContributionPortal() {
             onClick = { /* Handle Audio Record */ },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("RECORD ORAL HISTORY (AUDIO)")
+            Text(stringResource(R.string.action_record_audio))
         }
     }
 }

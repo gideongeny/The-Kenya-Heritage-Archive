@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kenya Heritage Archive</string>
+
+    <!-- TopAppBar Actions -->
     <string name="action_privacy">Privacy</string>
     <string name="action_search">Search</string>
-    <string name="action_share">Share</string>
-    
+    <string name="action_share">Share artifact to…</string>
+    <string name="action_more_options">More options</string>
+
+    <!-- Hamburger Menu -->
+    <string name="menu_heritage_map">🗺️  Heritage Map</string>
+    <string name="menu_download_archive">☁️  Download Archive Offline</string>
+    <string name="menu_download_syncing">Syncing… %1$d%%</string>
+    <string name="menu_foreigners_guide">🌍  Foreigner\'s Guide</string>
+    <string name="menu_privacy_policy">🔒  Privacy Policy</string>
+    <string name="menu_language">🌐  Change Language</string>
+    <string name="menu_language_english">🇬🇧  English</string>
+    <string name="menu_language_swahili">🇰🇪  Kiswahili</string>
+
     <!-- Main Screen -->
     <string name="label_era_of_the_day">ERA OF THE DAY</string>
     <string name="label_foreigners_guide">🌍  FOREIGNER\'S GUIDE</string>
     <string name="action_enter_the_vault">ENTER THE VAULT</string>
+    <string name="label_scroll_to_explore">Scroll the timeline to explore Kenya\'s history</string>
+    <string name="label_timeline_range">From the 11th Century to 2026</string>
+    <string name="label_events_around">Events around %1$d</string>
+    <string name="label_downloading_vault">Downloading Archive to Vault…</string>
+    <string name="label_syncing_progress">%1$d%%</string>
+
+    <!-- Share -->
     <string name="share_text_prefix">Discover Kenya\'s History 🇰🇪\n\n%1$s (%2$d)\n\n%3$s\n\nExplore more on the Kenya Heritage Archive app!</string>
-    <string name="share_chooser_title">Share artifact to...</string>
-    
+    <string name="share_chooser_title">Share artifact to…</string>
+
     <!-- Decade Galleries -->
     <string name="label_archival_photos">Archival Photos of the %1$ds</string>
     <string name="label_annual_chronicles">Annual Chronicles of the %1$ds</string>
-    
+
+    <!-- Vault Overlay -->
+    <string name="label_archival_discovery">Archival Discovery</string>
+    <string name="label_vault_asset">Vault Asset</string>
+    <string name="label_vault_asset_narrative">Discovering rare media from the archive.</string>
+
+    <!-- Map Screen -->
+    <string name="map_screen_title">Geographic Heritage Map</string>
+
     <!-- Search Screen -->
-    <string name="search_placeholder">Search places, people, events...</string>
+    <string name="search_placeholder">Search places, people, events…</string>
     <string name="search_empty_title">Search the Archive</string>
     <string name="search_empty_desc">Find artifacts by title, location, or story</string>
-    <string name="search_no_results_title">No artifacts found</string>
-    <string name="search_no_results_desc">Try searching for another keyword or location.</string>
     <string name="search_results_count">Found %1$d results</string>
+    <string name="search_not_in_archive">\"%1$s\" not yet in the Archive</string>
+    <string name="search_not_in_archive_desc">This chapter of Kenya\'s history isn\'t in our archive yet. You can look it up online or help us add it.</string>
+    <string name="search_wikipedia_button">Search Wikipedia for \"%1$s\"</string>
+    <string name="search_contribute_button">📬  Contribute This History</string>
+
+    <!-- Privacy Screen -->
+    <string name="privacy_screen_title">Privacy Policy</string>
+    <string name="privacy_title_1">1. Introduction</string>
+    <string name="privacy_content_1">The Kenya Heritage Archive is dedicated to preserving and celebrating Kenyan history. This Privacy Policy describes how we handle information in our application.</string>
+    <string name="privacy_title_2">2. Data Collection</string>
+    <string name="privacy_content_2">Our app is primarily an educational experience. We do not collect personal information such as names, email addresses, or phone numbers. All historical media is streamed from our public GitHub repository.</string>
+    <string name="privacy_title_3">3. Permissions</string>
+    <string name="privacy_content_3">The app may request Internet access to stream archival media. We do not use your location, contacts, or internal storage for data harvesting.</string>
+    <string name="privacy_title_4">4. Data Security</string>
+    <string name="privacy_content_4">We use secure HTTPS protocols to stream content from GitHub. No user data is transmitted to third-party servers for advertising or tracking purposes.</string>
+    <string name="privacy_title_5">5. Children\'s Privacy</string>
+    <string name="privacy_content_5">This app is intended for all ages. We do not knowingly collect personal information from children under 13.</string>
+    <string name="privacy_title_6">6. Contact Us</string>
+    <string name="privacy_content_6">If you have any questions about this Privacy Policy, please contact the developer via the official GitHub repository.</string>
+    <string name="privacy_last_updated">Last Updated: April 2026</string>
+
+    <!-- Contribution Portal -->
+    <string name="contribution_title">Preserve Your History</string>
+    <string name="contribution_desc">Contribute your community\'s oral traditions and rare documents to the national archive.</string>
+    <string name="label_story_title">Story Title</string>
+    <string name="label_relevant_era">Relevant Era or Year</string>
+    <string name="label_narrative">The Narrative / Oral History</string>
+    <string name="action_upload_archive">UPLOAD TO THE ARCHIVE</string>
+    <string name="action_record_audio">RECORD ORAL HISTORY (AUDIO)</string>
+
+    <!-- Error / Loading -->
+    <string name="label_loading">Loading…</string>
+    <string name="error_no_media">No media assets found in the vault for this era.</string>
+    <string name="label_significant_event">SIGNIFICANT EVENT</string>
+    <string name="label_oral_history">Oral History Recording</string>
 </resources>

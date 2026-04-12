@@ -130,7 +130,7 @@ fun SearchScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "\"$searchQuery\" not yet in the Archive",
+                            text = stringResource(R.string.search_not_in_archive, searchQuery),
                             style = MaterialTheme.typography.titleMedium,
                             color = Color.White,
                             fontWeight = FontWeight.Bold,
@@ -138,7 +138,7 @@ fun SearchScreen(
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "This chapter of Kenya's history isn't in our archive yet. You can look it up online or help us add it.",
+                            text = stringResource(R.string.search_not_in_archive_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = Color.Gray,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -160,7 +160,7 @@ fun SearchScreen(
                         ) {
                             Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Search Wikipedia for \"$searchQuery\"")
+                            Text(stringResource(R.string.search_wikipedia_button, searchQuery))
                         }
                         Spacer(modifier = Modifier.height(12.dp))
                         OutlinedButton(
@@ -172,7 +172,7 @@ fun SearchScreen(
                                 context.startActivity(intent)
                             }
                         ) {
-                            Text("📬  Contribute This History")
+                            Text(stringResource(R.string.search_contribute_button))
                         }
                     }
                 } else {

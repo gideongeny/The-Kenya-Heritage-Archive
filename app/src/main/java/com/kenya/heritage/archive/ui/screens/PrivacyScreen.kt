@@ -8,8 +8,10 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.kenya.heritage.archive.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -17,7 +19,7 @@ fun PrivacyScreen(onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Privacy Policy") },
+                title = { Text(stringResource(R.string.privacy_screen_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(
@@ -41,7 +43,7 @@ fun PrivacyScreen(onBack: () -> Unit) {
                 .padding(24.dp)
         ) {
             Text(
-                "The Kenya Heritage Archive",
+                stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
@@ -49,38 +51,38 @@ fun PrivacyScreen(onBack: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
             
             PrivacySection(
-                title = "1. Introduction",
-                content = "The Kenya Heritage Archive is dedicated to preserving and celebrating Kenyan history. This Privacy Policy describes how we handle information in our application."
+                title = stringResource(R.string.privacy_title_1),
+                content = stringResource(R.string.privacy_content_1)
             )
             
             PrivacySection(
-                title = "2. Data Collection",
-                content = "Our app is primarily an educational experience. We do not collect personal information such as names, email addresses, or phone numbers. All historical media is streamed from our public GitHub repository."
+                title = stringResource(R.string.privacy_title_2),
+                content = stringResource(R.string.privacy_content_2)
             )
             
             PrivacySection(
-                title = "3. Permissions",
-                content = "The app may request Internet access to stream archival media. We do not use your location, contacts, or internal storage for data harvesting."
+                title = stringResource(R.string.privacy_title_3),
+                content = stringResource(R.string.privacy_content_3)
             )
             
             PrivacySection(
-                title = "4. Data Security",
-                content = "We use secure HTTPS protocols to stream content from GitHub. No user data is transmitted to third-party servers for advertising or tracking purposes."
+                title = stringResource(R.string.privacy_title_4),
+                content = stringResource(R.string.privacy_content_4)
             )
             
             PrivacySection(
-                title = "5. Children's Privacy",
-                content = "This app is intended for all ages. We do not knowingly collect personal information from children under 13."
+                title = stringResource(R.string.privacy_title_5),
+                content = stringResource(R.string.privacy_content_5)
             )
             
             PrivacySection(
-                title = "6. Contact Us",
-                content = "If you have any questions about this Privacy Policy, please contact the developer via the official GitHub repository."
+                title = stringResource(R.string.privacy_title_6),
+                content = stringResource(R.string.privacy_content_6)
             )
             
             Spacer(modifier = Modifier.height(32.dp))
             Text(
-                "Last Updated: April 2026",
+                stringResource(R.string.privacy_last_updated),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

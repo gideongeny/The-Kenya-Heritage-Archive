@@ -1,26 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Kumbukumbu ya Urithi wa Kenya</string>
+
+    <!-- TopAppBar Actions -->
     <string name="action_privacy">Faragha</string>
     <string name="action_search">Tafuta</string>
-    <string name="action_share">Shiriki</string>
-    
+    <string name="action_share">Shiriki wasifu huu kwa…</string>
+    <string name="action_more_options">Chaguo zaidi</string>
+
+    <!-- Hamburger Menu -->
+    <string name="menu_heritage_map">🗺️  Ramani ya Urithi</string>
+    <string name="menu_download_archive">☁️  Pakua Hazina bila Mtandao</string>
+    <string name="menu_download_syncing">Inapakua… %1$d%%</string>
+    <string name="menu_foreigners_guide">🌍  Mwelekeo kwa Wageni</string>
+    <string name="menu_privacy_policy">🔒  Sera ya Faragha</string>
+    <string name="menu_language">🌐  Badilisha Lugha</string>
+    <string name="menu_language_english">🇬🇧  Kiingereza</string>
+    <string name="menu_language_swahili">🇰🇪  Kiswahili</string>
+
     <!-- Main Screen -->
     <string name="label_era_of_the_day">ENZI YA SIKU LEO</string>
     <string name="label_foreigners_guide">🌍  MWELEKEO KWA WAGENI</string>
     <string name="action_enter_the_vault">INGIA KWENYE HAZINA</string>
+    <string name="label_scroll_to_explore">Sogeza laini ya wakati kuchunguza historia ya Kenya</string>
+    <string name="label_timeline_range">Kuanzia Karne ya 11 hadi 2026</string>
+    <string name="label_events_around">Matukio karibu na %1$d</string>
+    <string name="label_downloading_vault">Inapakua Hazina ya Kumbukumbu…</string>
+    <string name="label_syncing_progress">%1$d%%</string>
+
+    <!-- Share -->
     <string name="share_text_prefix">Gundua Historia ya Kenya 🇰🇪\n\n%1$s (%2$d)\n\n%3$s\n\nGundua mengi kwenye programu ya Kumbukumbu ya Urithi wa Kenya!</string>
-    <string name="share_chooser_title">Shiriki wasifu huu kwa...</string>
-    
+    <string name="share_chooser_title">Shiriki wasifu huu kwa…</string>
+
     <!-- Decade Galleries -->
-    <string name="label_archival_photos">Picha za Kumbukumbu miaka ya %1$ds</string>
-    <string name="label_annual_chronicles">Matukio ya Kila Mwaka miaka ya %1$ds</string>
-    
+    <string name="label_archival_photos">Picha za Kumbukumbu za miaka ya %1$ds</string>
+    <string name="label_annual_chronicles">Matukio ya Kila Mwaka ya miaka ya %1$ds</string>
+
+    <!-- Vault Overlay -->
+    <string name="label_archival_discovery">Ugunduzi wa Hazina</string>
+    <string name="label_vault_asset">Mali ya Hazina</string>
+    <string name="label_vault_asset_narrative">Kugundua vyombo vya nadra kutoka kwenye hazina.</string>
+
+    <!-- Map Screen -->
+    <string name="map_screen_title">Ramani ya Kijiografia ya Urithi</string>
+
     <!-- Search Screen -->
-    <string name="search_placeholder">Tafuta maeneo, watu, matukio...</string>
+    <string name="search_placeholder">Tafuta maeneo, watu, matukio…</string>
     <string name="search_empty_title">Tafuta Kwenye Hazina</string>
     <string name="search_empty_desc">Pata matukio kwa jina, mahali, au hadithi</string>
-    <string name="search_no_results_title">Hakuna historia iliyopatikana</string>
-    <string name="search_no_results_desc">Jaribu kutafuta kwa neno lingine au eneo.</string>
     <string name="search_results_count">Tumepata matokeo %1$d</string>
+    <string name="search_not_in_archive">\"%1$s\" haijawekwa kwenye Hazina bado</string>
+    <string name="search_not_in_archive_desc">Sura hii ya historia ya Kenya bado haipo kwenye hazina yetu. Unaweza itafuta mtandaoni au utusaidie kuiongeza.</string>
+    <string name="search_wikipedia_button">Tafuta Wikipedia kuhusu \"%1$s\"</string>
+    <string name="search_contribute_button">📬  Changia Historia Hii</string>
+
+    <!-- Privacy Screen -->
+    <string name="privacy_screen_title">Sera ya Faragha</string>
+    <string name="privacy_title_1">1. Utangulizi</string>
+    <string name="privacy_content_1">Kumbukumbu ya Urithi wa Kenya imejitolea kuhifadhi na kusherehekea historia ya Kenya. Sera hii ya Faragha inaelezea jinsi tunavyoshughulikia habari katika programu yetu.</string>
+    <string name="privacy_title_2">2. Ukusanyaji wa Data</string>
+    <string name="privacy_content_2">Programu yetu ni ya kielimu. Hatukusanyi habari za kibinafsi kama majina, anwani za barua pepe, au nambari za simu. Vyombo vyote vya habari vya kihistoria vinatiririshwa kutoka kwa hazina yetu ya umma ya GitHub.</string>
+    <string name="privacy_title_3">3. Ruhusa</string>
+    <string name="privacy_content_3">Programu inaweza kuomba ufikiaji wa Mtandao ili kutiririsha vyombo vya habari vya kumbukumbu. Hatutumii eneo lako, anwani, au hifadhi ya ndani kwa uvunaji wa data.</string>
+    <string name="privacy_title_4">4. Usalama wa Data</string>
+    <string name="privacy_content_4">Tunatumia itifaki salama za HTTPS kutiririsha maudhui kutoka GitHub. Hakuna data ya mtumiaji inayotumwa kwa seva za watu wa tatu kwa madhumuni ya matangazo au ufuatiliaji.</string>
+    <string name="privacy_title_5">5. Faragha ya Watoto</string>
+    <string name="privacy_content_5">Programu hii imekusudiwa umri wote. Hatukusanyi habari za kibinafsi kutoka kwa watoto walio chini ya miaka 13 kwa makusudi.</string>
+    <string name="privacy_title_6">6. Wasiliana Nasi</string>
+    <string name="privacy_content_6">Ikiwa una maswali yoyote kuhusu Sera hii ya Faragha, tafadhali wasiliana na msanidi programu kupitia hazina rasmi ya GitHub.</string>
+    <string name="privacy_last_updated">Ilisasishwa Mwisho: Aprili 2026</string>
+
+    <!-- Contribution Portal -->
+    <string name="contribution_title">Hifadhi Historia Yako</string>
+    <string name="contribution_desc">Changia mila simulizi za jamii yako na hati adimu kwenye kumbukumbu ya kitaifa.</string>
+    <string name="label_story_title">Kichwa cha Hadithi</string>
+    <string name="label_relevant_era">Enzi au Mwaka Husika</string>
+    <string name="label_narrative">Simulizi / Historia ya Simulizi</string>
+    <string name="action_upload_archive">PAKUA KWENYE HAZINA</string>
+    <string name="action_record_audio">REKODI HISTORIA YA SIMULIZI (SAUTI)</string>
+
+    <!-- Error / Loading -->
+    <string name="label_loading">Inapakia…</string>
+    <string name="error_no_media">Hakuna vyombo vya habari vilivyopatikana kwenye hazina kwa enzi hii.</string>
+    <string name="label_significant_event">TUKIO MUHIMU</string>
+    <string name="label_oral_history">Rekodi ya Historia ya Simulizi</string>
 </resources>
