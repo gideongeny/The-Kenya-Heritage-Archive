@@ -1,0 +1,12 @@
+# Android
+.gradle/
+build/
+app/build/
+*.iml
+.idea/
+local.properties
+.DS_Store
+
+# Temporary exclusion for tiered push
+# images/
+# videos/

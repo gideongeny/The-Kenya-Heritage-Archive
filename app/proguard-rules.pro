@@ -1,0 +1,6 @@
+-keep class com.kenya.heritage.archive.data.model.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class com.google.gson.** { *; }
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**

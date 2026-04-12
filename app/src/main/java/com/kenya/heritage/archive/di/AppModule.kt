@@ -1,0 +1,43 @@
+package com.kenya.heritage.archive.di
+
+import android.content.Context
+import androidx.room.Room
+import com.kenya.heritage.archive.data.local.ArtifactDatabase
+import com.kenya.heritage.archive.data.repository.ArtifactRepository
+import com.kenya.heritage.archive.data.repository.ArtifactRepositoryImpl
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object DatabaseModule {
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): ArtifactDatabase {
+        return Room.databaseBuilder(
+            context,
+            ArtifactDatabase::class.java,
+            "kenya_heritage_archive.db"
+        ).fallbackToDestructiveMigration().build()
+    }
+
+    @Provides
+    fun provideArtifactDao(database: ArtifactDatabase) = database.artifactDao()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class RepositoryModule {
+
+    @Binds
+    @Singleton
+    abstract fun bindArtifactRepository(
+        impl: ArtifactRepositoryImpl
+    ): ArtifactRepository
+}
