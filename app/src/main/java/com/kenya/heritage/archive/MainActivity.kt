@@ -13,6 +13,8 @@ import com.kenya.heritage.archive.ui.screens.MainScreen
 import com.kenya.heritage.archive.ui.theme.HeritageTheme
 import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,11 +28,22 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             HeritageTheme {
+                var isSearchActive by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen(viewModel = viewModel)
+                    if (isSearchActive) {
+                        com.kenya.heritage.archive.ui.screens.SearchScreen(
+                            onBack = { isSearchActive = false }
+                        )
+                    } else {
+                        MainScreen(
+                            viewModel = viewModel,
+                            onNavigateToSearch = { isSearchActive = true }
+                        )
+                    }
                 }
             }
         }

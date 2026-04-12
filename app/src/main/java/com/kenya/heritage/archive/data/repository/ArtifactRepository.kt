@@ -10,6 +10,7 @@ import javax.inject.Singleton
 
 interface ArtifactRepository {
     fun getArtifacts(): Flow<List<HistoricalArtifact>>
+    fun searchArtifacts(query: String): Flow<List<HistoricalArtifact>>
     fun getArtifactsByRange(startYear: Int, endYear: Int): Flow<List<HistoricalArtifact>>
     fun getFeaturedArtifact(): Flow<HistoricalArtifact?>
     suspend fun refreshArtifacts()
@@ -25,6 +26,9 @@ class ArtifactRepositoryImpl @Inject constructor(
 
     override fun getArtifacts(): Flow<List<HistoricalArtifact>> =
         artifactDao.getAllArtifacts()
+
+    override fun searchArtifacts(query: String): Flow<List<HistoricalArtifact>> =
+        artifactDao.searchArtifacts(query)
 
     override fun getArtifactsByRange(startYear: Int, endYear: Int): Flow<List<HistoricalArtifact>> =
         artifactDao.getArtifactsByYearRange(startYear, endYear)

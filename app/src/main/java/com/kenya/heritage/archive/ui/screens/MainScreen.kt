@@ -12,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,7 +38,7 @@ import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: HistoryViewModel) {
+fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {}) {
     val uiState by viewModel.uiState.collectAsState()
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
@@ -65,6 +67,13 @@ fun MainScreen(viewModel: HistoryViewModel) {
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.padding(end = 4.dp)
                         ) {
+                            IconButton(onClick = onNavigateToSearch) {
+                                Icon(
+                                    imageVector = Icons.Default.Search,
+                                    contentDescription = "Search",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
                             TextButton(onClick = { showPrivacyPolicy = true }) {
                                 Text(
                                     "Privacy",
@@ -526,8 +535,27 @@ fun ArtifactCard(
                     Spacer(modifier = Modifier.height(16.dp))
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.End
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
+                        IconButton(onClick = {
+                            val sendIntent = android.content.Intent().apply {
+                                action = android.content.Intent.ACTION_SEND
+                                putExtra(
+                                    android.content.Intent.EXTRA_TEXT,
+                                    "Discover Kenya's History 🇰🇪\n\n${artifact.title} (${artifact.year})\n\n${artifact.deepNarrative}\n\nExplore more on the Kenya Heritage Archive app!"
+                                )
+                                type = "text/plain"
+                            }
+                            context.startActivity(android.content.Intent.createChooser(sendIntent, "Share artifact to..."))
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription = "Share",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                         OutlinedButton(
                             onClick = onEnterVault,
                             colors = ButtonDefaults.outlinedButtonColors(

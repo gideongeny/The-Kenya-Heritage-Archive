@@ -19,6 +19,9 @@ interface ArtifactDao {
     @Query("SELECT * FROM historical_artifacts WHERE category = :category ORDER BY year ASC")
     fun getByCategory(category: HistoricalCategory): Flow<List<HistoricalArtifact>>
 
+    @Query("SELECT * FROM historical_artifacts WHERE title LIKE '%' || :query || '%' OR deepNarrative LIKE '%' || :query || '%' OR locationName LIKE '%' || :query || '%' ORDER BY year ASC")
+    fun searchArtifacts(query: String): Flow<List<HistoricalArtifact>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertArtifacts(artifacts: List<HistoricalArtifact>)
 
