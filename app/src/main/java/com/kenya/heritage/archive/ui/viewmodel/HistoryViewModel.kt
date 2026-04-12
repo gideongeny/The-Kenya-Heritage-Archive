@@ -23,7 +23,8 @@ data class HistoryUiState(
 
 @HiltViewModel
 class HistoryViewModel @Inject constructor(
-    private val repository: ArtifactRepository
+    private val repository: ArtifactRepository,
+    val syncManager: com.kenya.heritage.archive.data.sync.OfflineSyncManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HistoryUiState())

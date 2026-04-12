@@ -1,16 +1,31 @@
 package com.kenya.heritage.archive.data.util
 
+import android.content.Context
+import java.io.File
+
 /**
  * Resolves GitHub raw URLs for images and videos hosted in the repository.
+ * Updated Phase 4: Acts as an offline-first proxy. If the asset exists in the
+ * local Vault cache, returns the local file:// URI instead of the network URL.
  * Base URL: https://raw.githubusercontent.com/gideongeny/The-Kenya-Heritage-Archive/main/
  */
 object GitHubAssetResolver {
     private const val BASE = "https://raw.githubusercontent.com/gideongeny/The-Kenya-Heritage-Archive/main"
 
     /**
-     * Returns an image URL for the given year, pulling from the decade subfolders.
-     * Use a deterministic index (per era) to cycle through images in that folder.
+     * Phase 4: Check if a remote URL is cached locally in the vault_media directory.
+     * If so, return the local file:// URI for completely offline playback.
      */
+    fun resolveOfflineFirst(context: Context, remoteUrl: String): String {
+        val fileName = remoteUrl.substringAfterLast("/")
+        val localFile = File(File(context.filesDir, "vault_media"), fileName)
+        return if (localFile.exists() && localFile.length() > 0) {
+            localFile.toURI().toString()
+        } else {
+            remoteUrl
+        }
+    }
+
     /**
      * Resolve an image for a specific year.
      * If the decade folder doesn't exist (pre-1890), it falls back to the 1890s pool.
@@ -20,7 +35,6 @@ object GitHubAssetResolver {
         val decade = (year / 10) * 10
         val decadeStr = "${decade}s"
         
-        // Find the folder in manifest or fallback to 1890s for ancient eras
         val eraKey = if (year < 1963) "Pre Independence Kenya" else "Post Independence Kenya"
         val folderKey = "$eraKey/$decadeStr"
         
@@ -61,7 +75,6 @@ object GitHubAssetResolver {
                 videoYear to encodeUrl("videos/$fileName")
             } else if (fileName.contains("${decade}s") || 
                 (decade == 1950 && fileName.contains("Mau Mau", ignoreCase = true))) {
-                // Fallback for keyword matches in decade
                 decade to encodeUrl("videos/$fileName")
             } else {
                 null

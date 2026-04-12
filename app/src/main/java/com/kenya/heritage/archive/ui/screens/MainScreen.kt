@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
@@ -19,6 +20,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -43,6 +45,10 @@ import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 @Composable
 fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {}, onNavigateToMap: () -> Unit = {}) {
     val uiState by viewModel.uiState.collectAsState()
+    val isSyncing by viewModel.syncManager.isSyncing.collectAsState()
+    val syncProgress by viewModel.syncManager.syncProgress.collectAsState()
+    
+    val scope = rememberCoroutineScope()
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
 
@@ -76,6 +82,19 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                     contentDescription = "Search",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
+                            }
+                            if (!isSyncing) {
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        viewModel.syncManager.startGlobalVaultSync(uiState.artifacts)
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.CloudDownload,
+                                        contentDescription = "Download Archive",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
                             }
                             IconButton(onClick = onNavigateToMap) {
                                 Icon(
@@ -125,11 +144,44 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                     .fillMaxSize()
                     .padding(padding)
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp)
-                ) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    // Offline Sync Progress Banner
+                    if (isSyncing) {
+                        androidx.compose.material3.LinearProgressIndicator(
+                            progress = { syncProgress },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(4.dp),
+                            color = MaterialTheme.colorScheme.primary,
+                            trackColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.08f))
+                                .padding(horizontal = 16.dp, vertical = 6.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Downloading Archive to Vault...",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                            Text(
+                                text = "${(syncProgress * 100).toInt()}%",
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                    
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        contentPadding = PaddingValues(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                    ) {
                     item {
                         EraOfTheDayCard(uiState.featuredArtifact, uiState.currentYear)
                     }
@@ -197,16 +249,19 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                             )
                         }
                     }
-                }
-
+                }  // end LazyColumn
+                
                 if (uiState.isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
-                        color = MaterialTheme.colorScheme.primary
-                    )
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.align(Alignment.Center),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
-            }
-        }
+            } // end Column
+        } // end Box
+    }
 
         // Vault Gallery Overlay (TRUE FULL SCREEN)
         if (selectedArtifactForVault != null) {

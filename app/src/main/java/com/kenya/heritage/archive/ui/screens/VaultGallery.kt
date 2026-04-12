@@ -102,9 +102,12 @@ fun VaultGallery(
 
                     when (asset.type) {
                         AssetType.IMAGE -> {
+                            val context = LocalContext.current
+                            val imageUrl = com.kenya.heritage.archive.data.util.GitHubAssetResolver
+                                .resolveOfflineFirst(context, asset.url)
                             Box(contentAlignment = Alignment.Center) {
                                 AsyncImage(
-                                    model = asset.url,
+                                    model = imageUrl,
                                     contentDescription = asset.caption,
                                     modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Fit,
@@ -185,6 +188,9 @@ fun VaultGallery(
 @Composable
 fun VideoPlayer(asset: MediaAsset) {
     val context = LocalContext.current
+    // Phase 4: Serve from local vault cache if previously downloaded for true offline support
+    val resolvedUrl = com.kenya.heritage.archive.data.util.GitHubAssetResolver
+        .resolveOfflineFirst(context, asset.url)
     val exoPlayer = remember {
         ExoPlayer.Builder(context)
             .setMediaSourceFactory(
@@ -193,7 +199,7 @@ fun VideoPlayer(asset: MediaAsset) {
             )
             .build()
             .apply {
-                setMediaItem(MediaItem.fromUri(asset.url))
+                setMediaItem(MediaItem.fromUri(resolvedUrl))
                 prepare()
                 playWhenReady = true
             }
