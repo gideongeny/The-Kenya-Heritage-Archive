@@ -15,6 +15,8 @@ import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.background
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -28,21 +30,52 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             HeritageTheme {
-                var isSearchActive by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+                var currentScreen by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("TIMELINE") }
+                
+                var selectedArtifactForVault by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf<com.kenya.heritage.archive.data.model.HistoricalArtifact?>(null) }
 
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    if (isSearchActive) {
-                        com.kenya.heritage.archive.ui.screens.SearchScreen(
-                            onBack = { isSearchActive = false }
-                        )
-                    } else {
-                        MainScreen(
-                            viewModel = viewModel,
-                            onNavigateToSearch = { isSearchActive = true }
-                        )
+                    androidx.compose.foundation.layout.Box(modifier = Modifier.fillMaxSize()) {
+                        when (currentScreen) {
+                            "SEARCH" -> {
+                                com.kenya.heritage.archive.ui.screens.SearchScreen(
+                                    onBack = { currentScreen = "TIMELINE" }
+                                )
+                            }
+                            "MAP" -> {
+                                val uiState by viewModel.uiState.collectAsState()
+                                com.kenya.heritage.archive.ui.screens.MapScreen(
+                                    artifacts = uiState.artifacts,
+                                    onBack = { currentScreen = "TIMELINE" },
+                                    onArtifactSelected = { artifact ->
+                                        selectedArtifactForVault = artifact
+                                    }
+                                )
+                            }
+                            else -> {
+                                MainScreen(
+                                    viewModel = viewModel,
+                                    onNavigateToSearch = { currentScreen = "SEARCH" },
+                                    onNavigateToMap = { currentScreen = "MAP" }
+                                )
+                            }
+                        }
+                        
+                        if (selectedArtifactForVault != null) {
+                            androidx.compose.foundation.layout.Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(androidx.compose.ui.graphics.Color.Black)
+                            ) {
+                                com.kenya.heritage.archive.ui.screens.VaultGallery(
+                                    artifact = selectedArtifactForVault!!,
+                                    onClose = { selectedArtifactForVault = null }
+                                )
+                            }
+                        }
                     }
                 }
             }

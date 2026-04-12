@@ -105,6 +105,9 @@ dependencies {
     implementation 'io.coil-kt:coil-compose:2.6.0'
     implementation 'io.coil-kt:coil-video:2.6.0'
 
+    // Osmdroid (Offline Maps)
+    implementation 'org.osmdroid:osmdroid-android:6.1.18'
+
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:32.7.2')
     implementation 'com.google.firebase:firebase-firestore-ktx'

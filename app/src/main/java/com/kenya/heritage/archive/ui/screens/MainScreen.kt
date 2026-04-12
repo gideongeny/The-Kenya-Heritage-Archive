@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
@@ -40,7 +41,7 @@ import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {}) {
+fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {}, onNavigateToMap: () -> Unit = {}) {
     val uiState by viewModel.uiState.collectAsState()
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
@@ -73,6 +74,13 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {})
                                 Icon(
                                     imageVector = Icons.Default.Search,
                                     contentDescription = "Search",
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                            IconButton(onClick = onNavigateToMap) {
+                                Icon(
+                                    imageVector = Icons.Default.LocationOn,
+                                    contentDescription = "Map",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
