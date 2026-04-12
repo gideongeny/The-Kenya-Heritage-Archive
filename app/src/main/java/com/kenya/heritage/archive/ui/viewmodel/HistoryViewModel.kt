@@ -43,7 +43,7 @@ class HistoryViewModel @Inject constructor(
             } else false
 
             if (count == 0 || isStale) {
-                if (isStale) repository.refreshArtifacts() // Clears the DB
+                if (isStale) repository.refreshArtifacts() // Wipes the DB
                 val seed = HistoricalSeeder.getDeepHeritageStitch()
                 repository.insertSeeds(seed)
             }

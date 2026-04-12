@@ -39,11 +39,7 @@ class ArtifactRepositoryImpl @Inject constructor(
     override suspend fun count(): Int = artifactDao.count()
 
     override suspend fun refreshArtifacts() {
-        // Placeholder for Firestore remote sync
-        // val snapshot = firestore.collection("artifacts").get().await()
-        // val remote = snapshot.toObjects(HistoricalArtifact::class.java)
-        // artifactDao.clearAll()
-        // artifactDao.insertArtifacts(remote)
+        artifactDao.clearAll()
     }
 
     override suspend fun seedFromLocalFolders(videosDir: File) {
