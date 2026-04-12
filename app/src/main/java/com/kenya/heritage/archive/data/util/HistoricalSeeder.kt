@@ -570,9 +570,6 @@ object HistoricalSeeder {
         )
     )
 
-    // ─────────────────────────────────────────────────────────────
-    // Helper factory
-    // ─────────────────────────────────────────────────────────────
     private fun artifact(
         id: String,
         title: String,
@@ -581,31 +578,39 @@ object HistoricalSeeder {
         epoch: String,
         banner: String,
         images: List<String>,
-        narrative: String,
-        foreign: String,
-        decade: String,
-        significant: String,
-        fun_: String,
-        isFeatured: Boolean = false,
         videos: List<String> = emptyList(),
-        category: HistoricalCategory = HistoricalCategory.POLITICAL
-    ) = HistoricalArtifact(
-        id = id,
-        title = title,
-        year = year,
-        period = period,
-        historicalEpoch = epoch,
-        deepNarrative = narrative,
-        foreignerTips = foreign,
-        decadeDescription = decade,
-        significantEvent = significant,
-        funFact = fun_,
-        bannerImageUrl = banner,
-        latitude = -1.286389,
-        longitude = 36.817222,
-        category = category,
-        isFeatured = isFeatured,
-        mediaAssets = images.map { MediaAsset(it, AssetType.IMAGE) } + 
-                videos.map { MediaAsset(GitHubAssetResolver.videoUrl(it), AssetType.VIDEO) }
-    )
+        decade: String,
+        narrative: String,
+        foreign: String? = null,
+        significant: String? = null,
+        fun_: String? = null,
+        isFeatured: Boolean = false
+    ): HistoricalArtifact {
+        val autoVideos = (GitHubAssetResolver.getVideosForYear(year) + 
+                         videos.map { GitHubAssetResolver.videoUrl(it) }).distinct().map { url ->
+            MediaAsset(url = url, type = AssetType.VIDEO)
+        }
+        val autoImages = images.map { url ->
+            MediaAsset(url = url, type = AssetType.IMAGE)
+        }
+        
+        return HistoricalArtifact(
+            id = id,
+            title = title,
+            year = year,
+            period = period,
+            historicalEpoch = epoch,
+            deepNarrative = narrative,
+            foreignerTips = foreign,
+            category = HistoricalCategory.POLITICAL,
+            mediaAssets = autoVideos + autoImages,
+            bannerImageUrl = banner,
+            decadeDescription = decade,
+            significantEvent = significant,
+            funFact = fun_,
+            latitude = -1.286389,
+            longitude = 36.817222,
+            isFeatured = isFeatured
+        )
+    }
 }
