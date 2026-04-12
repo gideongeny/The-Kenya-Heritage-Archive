@@ -13,6 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CloudDownload
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
@@ -26,6 +27,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.activity.compose.BackHandler
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,6 +54,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
     val scope = rememberCoroutineScope()
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
+    var showMenu by remember { mutableStateOf(false) }
 
     var selectedArtifactForVault by remember { mutableStateOf<HistoricalArtifact?>(null) }
 
@@ -72,58 +76,89 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                         )
                     },
                     actions = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(end = 4.dp)
-                        ) {
-                            IconButton(onClick = onNavigateToSearch) {
+                        // Search icon — full dedicated space
+                        IconButton(onClick = onNavigateToSearch) {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "Search",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        // Hamburger / more-options menu
+                        Box {
+                            IconButton(onClick = { showMenu = true }) {
                                 Icon(
-                                    imageVector = Icons.Default.Search,
-                                    contentDescription = "Search",
+                                    imageVector = Icons.Default.MoreVert,
+                                    contentDescription = "More options",
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
-                            if (!isSyncing) {
-                                IconButton(onClick = {
-                                    scope.launch {
-                                        viewModel.syncManager.startGlobalVaultSync(uiState.artifacts)
+                            DropdownMenu(
+                                expanded = showMenu,
+                                onDismissRequest = { showMenu = false }
+                            ) {
+                                // Map
+                                DropdownMenuItem(
+                                    text = { Text("🗺️  Heritage Map") },
+                                    onClick = {
+                                        showMenu = false
+                                        onNavigateToMap()
+                                    },
+                                    leadingIcon = {
+                                        Icon(Icons.Default.LocationOn, contentDescription = null)
                                     }
-                                }) {
-                                    Icon(
-                                        imageVector = Icons.Default.CloudDownload,
-                                        contentDescription = "Download Archive",
-                                        tint = MaterialTheme.colorScheme.primary
+                                )
+                                // Download Archive
+                                if (!isSyncing) {
+                                    DropdownMenuItem(
+                                        text = { Text("☁️  Download Archive Offline") },
+                                        onClick = {
+                                            showMenu = false
+                                            scope.launch {
+                                                viewModel.syncManager.startGlobalVaultSync(uiState.artifacts)
+                                            }
+                                        },
+                                        leadingIcon = {
+                                            Icon(Icons.Default.CloudDownload, contentDescription = null)
+                                        }
+                                    )
+                                } else {
+                                    DropdownMenuItem(
+                                        text = { Text("Syncing… ${(syncProgress * 100).toInt()}%") },
+                                        onClick = { showMenu = false },
+                                        enabled = false
                                     )
                                 }
-                            }
-                            IconButton(onClick = onNavigateToMap) {
-                                Icon(
-                                    imageVector = Icons.Default.LocationOn,
-                                    contentDescription = "Map",
-                                    tint = MaterialTheme.colorScheme.primary
+                                HorizontalDivider()
+                                // Foreigner's Guide toggle
+                                DropdownMenuItem(
+                                    text = {
+                                        Row(
+                                            verticalAlignment = Alignment.CenterVertically,
+                                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                        ) {
+                                            Text("🌍  Foreigner's Guide")
+                                            Spacer(modifier = Modifier.weight(1f))
+                                            Switch(
+                                                checked = isForeignerGuideEnabled,
+                                                onCheckedChange = { isForeignerGuideEnabled = it },
+                                                colors = SwitchDefaults.colors(
+                                                    checkedThumbColor = MaterialTheme.colorScheme.primary
+                                                )
+                                            )
+                                        }
+                                    },
+                                    onClick = { isForeignerGuideEnabled = !isForeignerGuideEnabled }
+                                )
+                                // Privacy Policy
+                                DropdownMenuItem(
+                                    text = { Text("🔒  Privacy Policy") },
+                                    onClick = {
+                                        showMenu = false
+                                        showPrivacyPolicy = true
+                                    }
                                 )
                             }
-                            TextButton(onClick = { showPrivacyPolicy = true }) {
-                                Text(
-                                    "Privacy",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
-                                )
-                            }
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                "Guide",
-                                style = MaterialTheme.typography.labelSmall,
-                                color = Color.Gray
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Switch(
-                                checked = isForeignerGuideEnabled,
-                                onCheckedChange = { isForeignerGuideEnabled = it },
-                                colors = SwitchDefaults.colors(
-                                    checkedThumbColor = MaterialTheme.colorScheme.primary
-                                )
-                            )
                         }
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
@@ -295,7 +330,27 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
     } else {
         "${(currentYear / 100) + 1}${getCenturySuffix((currentYear / 100) + 1)} Century • Kenya Heritage"
     }
-    
+
+    // Build the full pool of images to rotate through
+    val imagePool = remember(currentYear) {
+        val pool = mutableListOf<String>()
+        artifact?.bannerImageUrl?.let { pool.add(it) }
+        pool.addAll(GitHubAssetResolver.getImagesForDecade(currentYear))
+        if (pool.isEmpty()) pool.add(GitHubAssetResolver.imageForYear(currentYear))
+        pool.distinct()
+    }
+
+    // Auto-rotate image index every 4 seconds
+    var imageIndex by remember(currentYear) { mutableStateOf(0) }
+    LaunchedEffect(currentYear, imagePool.size) {
+        if (imagePool.size > 1) {
+            while (true) {
+                kotlinx.coroutines.delay(4000L)
+                imageIndex = (imageIndex + 1) % imagePool.size
+            }
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -304,15 +359,19 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = artifact?.bannerImageUrl 
-                    ?: GitHubAssetResolver.getImagesForDecade(currentYear).firstOrNull() 
-                    ?: GitHubAssetResolver.imageForYear(currentYear),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop,
-                alpha = 0.4f
-            )
+            // Crossfade between rotating images
+            Crossfade(
+                targetState = imagePool.getOrNull(imageIndex) ?: imagePool.firstOrNull(),
+                animationSpec = tween(durationMillis = 1200)
+            ) { imageUrl ->
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    alpha = 0.45f
+                )
+            }
             
             // Gradient Overlay
             Box(
@@ -356,10 +415,28 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)
                 )
+                // Image count indicator dots
+                if (imagePool.size > 1) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                        imagePool.indices.forEach { i ->
+                            Box(
+                                modifier = Modifier
+                                    .size(if (i == imageIndex) 8.dp else 5.dp)
+                                    .background(
+                                        color = if (i == imageIndex) MaterialTheme.colorScheme.primary
+                                                else Color.White.copy(alpha = 0.4f),
+                                        shape = CircleShape
+                                    )
+                            )
+                        }
+                    }
+                }
             }
         }
     }
 }
+
 
 private fun getCenturySuffix(century: Int): String {
     return when (century % 10) {

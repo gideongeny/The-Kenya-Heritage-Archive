@@ -15,6 +15,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -112,22 +113,67 @@ fun SearchScreen(
                         )
                     }
                 } else if (searchResults.isEmpty()) {
-                    // No Results State
+                    // No Results - offer a web search suggestion
+                    val context = LocalContext.current
                     Column(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(24.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = null,
+                            modifier = Modifier.size(52.dp),
+                            tint = Color.Gray.copy(alpha = 0.4f)
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = stringResource(R.string.search_no_results_title),
+                            text = "\"$searchQuery\" not yet in the Archive",
                             style = MaterialTheme.typography.titleMedium,
-                            color = Color.Gray
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         )
+                        Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = stringResource(R.string.search_no_results_desc),
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color.Gray.copy(alpha = 0.8f)
+                            text = "This chapter of Kenya's history isn't in our archive yet. You can look it up online or help us add it.",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.Gray,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        // Wikipedia search button
+                        Button(
+                            onClick = {
+                                val encodedQuery = java.net.URLEncoder.encode("Kenya $searchQuery history", "UTF-8")
+                                val intent = android.content.Intent(
+                                    android.content.Intent.ACTION_VIEW,
+                                    android.net.Uri.parse("https://en.wikipedia.org/w/index.php?search=$encodedQuery")
+                                )
+                                context.startActivity(intent)
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Icon(Icons.Default.Search, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text("Search Wikipedia for \"$searchQuery\"")
+                        }
+                        Spacer(modifier = Modifier.height(12.dp))
+                        OutlinedButton(
+                            onClick = {
+                                val intent = android.content.Intent(
+                                    android.content.Intent.ACTION_SENDTO,
+                                    android.net.Uri.parse("mailto:archive@kenya-heritage.app?subject=Contribute: $searchQuery&body=I would like to contribute information about '$searchQuery' to the Kenya Heritage Archive.")
+                                )
+                                context.startActivity(intent)
+                            }
+                        ) {
+                            Text("📬  Contribute This History")
+                        }
                     }
                 } else {
                     // Results State
