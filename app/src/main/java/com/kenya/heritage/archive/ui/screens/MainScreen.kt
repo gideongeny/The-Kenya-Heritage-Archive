@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
@@ -78,6 +79,8 @@ fun MainScreen(viewModel: HistoryViewModel) {
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
+        var selectedArtifactForVault by remember { mutableStateOf<HistoricalArtifact?>(null) }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -90,6 +93,50 @@ fun MainScreen(viewModel: HistoryViewModel) {
             ) {
                 item {
                     EraOfTheDayCard(uiState.featuredArtifact)
+                }
+
+                // NEW: Proactive Video Discovery Prompt
+                val videoArtifact = uiState.artifacts.find { art -> 
+                    art.year == uiState.currentYear && art.mediaAssets.any { it.type == AssetType.VIDEO }
+                }
+                if (videoArtifact != null) {
+                    item {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                            shape = MaterialTheme.shapes.medium,
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
+                            onClick = { selectedArtifactForVault = videoArtifact }
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .background(MaterialTheme.colorScheme.primary, CircleShape),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(Icons.Default.PlayArrow, null, tint = Color.Black)
+                                }
+                                Spacer(modifier = Modifier.width(16.dp))
+                                Column {
+                                    Text(
+                                        "Watch ${uiState.currentYear} Archive",
+                                        style = MaterialTheme.typography.titleMedium,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        "Archival footage discovered in the vault",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = Color.LightGray
+                                    )
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (uiState.artifacts.isEmpty()) {
@@ -126,7 +173,8 @@ fun MainScreen(viewModel: HistoryViewModel) {
                     items(uiState.artifacts) { artifact ->
                         ArtifactCard(
                             artifact = artifact,
-                            isForeignerGuideEnabled = isForeignerGuideEnabled
+                            isForeignerGuideEnabled = isForeignerGuideEnabled,
+                            onEnterVault = { selectedArtifactForVault = artifact }
                         )
                     }
                 }
@@ -137,6 +185,16 @@ fun MainScreen(viewModel: HistoryViewModel) {
                     modifier = Modifier.align(Alignment.Center),
                     color = MaterialTheme.colorScheme.primary
                 )
+            }
+
+            // Vault Gallery Overlay
+            if (selectedArtifactForVault != null) {
+                Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+                    VaultGallery(
+                        artifact = selectedArtifactForVault!!,
+                        onClose = { selectedArtifactForVault = null }
+                    )
+                }
             }
         }
     }
@@ -235,7 +293,8 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?) {
 @Composable
 fun ArtifactCard(
     artifact: HistoricalArtifact,
-    isForeignerGuideEnabled: Boolean = false
+    isForeignerGuideEnabled: Boolean = false,
+    onEnterVault: () -> Unit = {}
 ) {
     var isExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -464,7 +523,7 @@ fun ArtifactCard(
                         horizontalArrangement = Arrangement.End
                     ) {
                         OutlinedButton(
-                            onClick = { /* TODO: Navigate to VaultGallery */ },
+                            onClick = onEnterVault,
                             colors = ButtonDefaults.outlinedButtonColors(
                                 contentColor = MaterialTheme.colorScheme.primary
                             ),

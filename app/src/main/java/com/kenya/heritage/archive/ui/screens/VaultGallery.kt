@@ -7,7 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -30,7 +32,10 @@ import com.kenya.heritage.archive.media.VideoCacheManager
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun VaultGallery(artifact: HistoricalArtifact) {
+fun VaultGallery(
+    artifact: HistoricalArtifact,
+    onClose: () -> Unit
+) {
     val pagerState = rememberPagerState(pageCount = { artifact.mediaAssets.size })
 
     Column(
@@ -38,6 +43,23 @@ fun VaultGallery(artifact: HistoricalArtifact) {
             .fillMaxSize()
             .background(Color.Black)
     ) {
+        // Close button
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+                .statusBarsPadding()
+        ) {
+            IconButton(
+                onClick = onClose,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .background(Color.White.copy(alpha = 0.15f), CircleShape)
+            ) {
+                Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
+            }
+        }
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
