@@ -7,6 +7,6 @@ app/build/
 local.properties
 .DS_Store
 
+
 # Temporary exclusion for tiered push
-# images/
-# videos/
+# Deleted these lines to ensure all assets are pushed as requested.

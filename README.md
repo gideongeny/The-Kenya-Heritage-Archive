@@ -1,59 +1,44 @@
-# 🇰🇪 The Kenya Heritage Archive (1100 – 2026)
+# 🇰🇪 The Kenya Heritage Archive
 
-[![Build Status](https://img.shields.io/badge/Build-Success-success?style=for-the-badge&logo=android)](https://github.com/gideongeny/The-Kenya-Heritage-Archive)
-[![Platform](https://img.shields.io/badge/Platform-Android-green?style=for-the-badge&logo=android)](https://developer.android.com/android)
-[![Kotlin](https://img.shields.io/badge/Kotlin-v1.9.0-blue?style=for-the-badge&logo=kotlin)](https://kotlinlang.org/)
+[![Android Build](https://img.shields.io/badge/Platform-Android-green.svg)](https://developer.android.com)
+[![Kotlin](https://img.shields.io/badge/Language-Kotlin-blue.svg)](https://kotlinlang.org)
+[![Content](https://img.shields.io/badge/History-1100--2026-orange.svg)](#)
 
-**The Kenya Heritage Archive** is a premium, immersive digital time capsule documenting the rich, complex, and unyielding history of Kenya. From the 11th-century Swahili city-states to the digital "Silicon Savannah" of 2026, this application serves as a bridge across a millennium of heritage.
+**The Kenya Heritage Archive** is a premium, immersive digital time capsule dedicated to preserving the rich tapestry of Kenyan history. From the dawn of the Swahili civilization in the 11th century to the digital revolution of 2026, this application serves as a gateway to our ancestors' stories, struggles, and triumphs.
 
-![Kenya Heritage Archive Banner](https://raw.githubusercontent.com/gideongeny/The-Kenya-Heritage-Archive/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+## 🏛 Key Features
 
-## 🏛 The Experience
+- **Historical Timeline**: Navigate through over 900 years of history, from pre-colonial kingdoms and the arrival of explorers to the birth of a republic.
+- **The Vault**: A high-speed digital archival gallery featuring over **200+ historical images** and **70+ rare archival videos**.
+- **Mau Mau Archives**: Dedicated archival footage of the land and freedom struggle, including the capture of Field Marshal Dedan Kimathi.
+- **Offline-First Excellence**: Designed for connectivity resilience, allowing you to carry our history anywhere, anytime.
+- **Foreigner's Guide**: An optional educational layer providing context and tips for international users learning about Kenyan culture for the first time.
 
-Designed with a **"Heritage Dark"** aesthetic inspired by the Kenyan shield and flag, the app offers an offline-first, cinematic journey through time:
+## 🎥 Archival Media
 
-- **🕰 Millennary Timeline**: A custom-engineered `TimelineScrubber` allowing users to glide through 1,000+ years of history instantly.
-- **🎥 The Vault**: A high-speed, GitHub-integrated media engine that streams archival footage and high-resolution images of historical milestones.
-- **📱 Proactive Discovery**: As you scrub, the app intelligently identifies and highlights available archival videos for the specific year you've selected.
-- **🗺 Decade-by-Decade Enrichment**: Deeply researched narratives for every decade, featuring "Significant Occasions" and "Fascinating Fun Facts."
-- **🌍 Foreigner’s Guide**: A toggleable cultural bridge providing international context for Kenyan cultural terms and practices.
+The app leverages a dynamic GitHub-hosted asset repository to deliver high-quality archival footage without bloating the initial app size:
+- **images/[Era]/[Decade]s/**: Systematic organization for rapid asset discovery.
+- **videos/**: Keyword-indexed video retrieval for rare footage (e.g., Lari Massacre trials, Independence Day celebrations).
 
-## 🛠 Technical Stack
+## 🛡 Privacy & Transparency
 
-Built with modern Android standards for performance, longevity, and offline resilience:
+- **No Data Harvesting**: We believe history belongs to the people. No personal data is collected or shared.
+- **Educational Intent**: This is a non-profit archival project intended for research, education, and national pride.
 
-- **Core**: Kotlin & Jetpack Compose (Declarative UI)
-- **Engine**: Hilt (Dependency Injection) & Room (Offline Persistence)
-- **Media**: Media3 / ExoPlayer (Video Streaming) with a 500MB Smart Cache
-- **Imaging**: Coil with custom `VideoThumbnailLoader` for high-speed archival previews
-- **Deployment**: Tiered Git strategy for high-bandwidth media management
+## 🛠 Technology Stack
 
-## 🚀 Installation & Build
+- **UI**: Jetpack Compose (Material 3)
+- **Engine**: Kotlin Coroutines & StateFlow
+- **Media**: Media3 ExoPlayer & Coil for image caching
+- **Architecture**: Clean Architecture with MVVM & Room Persistence
+- **Content**: Custom seeder with deep narratives for every historical milestone
 
-### Prerequisites
-- Android Studio Hedgehog (2023.1.1) or newer
-- JDK 17
-- Android SDK 34 (API 34)
+## 🏗 Installation
 
-### Building from Source
-```bash
-# Clone the repository
-git clone https://github.com/gideongeny/The-Kenya-Heritage-Archive.git
-
-# Navigate to the project
-cd "The Kenya Heritage Archive"
-
-# Build the debug APK
-./gradlew assembleDebug
-```
-
-## 📦 Repository Structure
-- `/app`: Main Android module.
-- `/images`: Curated library of 100+ historical images.
-- `/videos`: Archival footage library (~1.2GB) synchronized via tiered deployment.
-
-## 📜 Historical Note
-This archive is a tribute to the sacrifice of the Mau Mau, the wisdom of the elders across all 47 counties, and the digital pioneers of the 21st century. It is built to ensure that while we look forward to the horizon, we never lose sight of our roots.
+1. Clone the repository.
+2. Open in Android Studio (Ladybug or later).
+3. Build and run on any Android device with SDK 24+.
 
 ---
-**Developed with pride for the Republic of Kenya.** 🇰🇪
+
+*Dedicated to all those who fought for the soil and the soul of Kenya.*

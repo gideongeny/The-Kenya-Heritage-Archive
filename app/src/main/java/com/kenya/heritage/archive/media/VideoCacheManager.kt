@@ -4,15 +4,18 @@ import android.content.Context
 import androidx.media3.database.StandaloneDatabaseProvider
 import androidx.media3.datasource.DataSource
 import androidx.media3.datasource.DefaultDataSource
-import androidx.media3.datasource.DefaultHttpDataSource
-import androidx.media3.datasource.cache.CacheDataSource
-import androidx.media3.datasource.cache.LeastRecentlyUsedCacheEvictor
-import androidx.media3.datasource.cache.SimpleCache
+import androidx.media3.datasource.okhttp.OkHttpDataSource
+import okhttp3.OkHttpClient
 import java.io.File
 
 object VideoCacheManager {
     private var cache: SimpleCache? = null
     private const val MAX_CACHE_SIZE = 500 * 1024 * 1024L // 500MB
+
+    private val okHttpClient = OkHttpClient.Builder()
+        .followRedirects(true)
+        .followSslRedirects(true)
+        .build()
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     private fun getCache(context: Context): SimpleCache {
@@ -26,10 +29,9 @@ object VideoCacheManager {
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     fun getCacheDataSourceFactory(context: Context): DataSource.Factory {
-        val httpDataSourceFactory = DefaultHttpDataSource.Factory()
-            .setAllowCrossProtocolRedirects(true)
+        val okHttpDataSourceFactory = OkHttpDataSource.Factory(okHttpClient)
 
-        val defaultDataSourceFactory = DefaultDataSource.Factory(context, httpDataSourceFactory)
+        val defaultDataSourceFactory = DefaultDataSource.Factory(context, okHttpDataSourceFactory)
 
         return CacheDataSource.Factory()
             .setCache(getCache(context))

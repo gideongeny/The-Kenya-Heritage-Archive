@@ -7,9 +7,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -18,7 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
@@ -37,13 +42,14 @@ fun VaultGallery(
     onClose: () -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { artifact.mediaAssets.size })
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
-        // Close button
+        // Immersive Top Bar area (Transparent)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -54,58 +60,120 @@ fun VaultGallery(
                 onClick = onClose,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .background(Color.White.copy(alpha = 0.15f), CircleShape)
+                    .background(Color.White.copy(alpha = 0.2f), CircleShape)
             ) {
                 Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
             }
         }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) { page ->
-            val asset = artifact.mediaAssets[page]
+        if (artifact.mediaAssets.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                when (asset.type) {
-                    AssetType.IMAGE -> {
-                        AsyncImage(
-                            model = asset.url,
-                            contentDescription = asset.caption,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Fit
-                        )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Icon(
+                        Icons.Default.Info,
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp),
+                        tint = Color.Gray
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        "No media assets found in the vault for this era.",
+                        color = Color.Gray,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+        } else {
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier
+                    .weight(1.2f) // Give more priority to media
+                    .fillMaxWidth()
+            ) { page ->
+                val asset = artifact.mediaAssets[page]
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    var isLoading by remember { mutableStateOf(true) }
+
+                    when (asset.type) {
+                        AssetType.IMAGE -> {
+                            Box(contentAlignment = Alignment.Center) {
+                                AsyncImage(
+                                    model = asset.url,
+                                    contentDescription = asset.caption,
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Fit,
+                                    onSuccess = { isLoading = false },
+                                    onError = { isLoading = false }
+                                )
+                                if (isLoading) {
+                                    CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                                }
+                            }
+                        }
+                        AssetType.VIDEO -> VideoPlayer(asset)
+                        else -> AudioPlayer(asset)
                     }
-                    AssetType.VIDEO -> VideoPlayer(asset)
-                    AssetType.AUDIO -> AudioPlayer(asset)
                 }
             }
         }
 
+        // Narrative Section (Scrollable)
         Surface(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .weight(0.8f) // Text section is scrollable and takes less initial space
+                .fillMaxWidth(),
             color = MaterialTheme.colorScheme.surface,
-            tonalElevation = 8.dp
+            tonalElevation = 12.dp
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .verticalScroll(scrollState)
+            ) {
                 Text(
                     text = artifact.title,
                     style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = artifact.period,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                )
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = artifact.deepNarrative,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = Color.White
+                    style = MaterialTheme.typography.bodyLarge.copy(lineHeight = 28.sp),
+                    color = Color.White.copy(alpha = 0.9f)
                 )
+                
+                if (!artifact.significantEvent.isNullOrBlank()) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Text(
+                        "SIGNIFICANT EVENT",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        artifact.significantEvent!!,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.LightGray
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(48.dp)) // Padding at bottom for scroll
             }
         }
     }
+
 }
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)

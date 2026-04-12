@@ -9,6 +9,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -18,6 +20,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.activity.compose.BackHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -35,166 +38,189 @@ import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
 fun MainScreen(viewModel: HistoryViewModel) {
     val uiState by viewModel.uiState.collectAsState()
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
+    var showPrivacyPolicy by remember { mutableStateOf(false) }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        "Kenya Heritage Archive",
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                },
-                actions = {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(end = 12.dp)
-                    ) {
+    var selectedArtifactForVault by remember { mutableStateOf<HistoricalArtifact?>(null) }
+
+    if (showPrivacyPolicy) {
+        BackHandler { showPrivacyPolicy = false }
+        PrivacyScreen(onBack = { showPrivacyPolicy = false })
+        return
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
                         Text(
-                            "Foreigner's Guide",
-                            style = MaterialTheme.typography.labelSmall,
-                            color = Color.Gray
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Switch(
-                            checked = isForeignerGuideEnabled,
-                            onCheckedChange = { isForeignerGuideEnabled = it },
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = MaterialTheme.colorScheme.primary
-                            )
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.Transparent
-                )
-            )
-        },
-        bottomBar = {
-            TimelineScrubber(
-                currentYear = uiState.currentYear,
-                onYearChanged = viewModel::onYearChanged
-            )
-        },
-        containerColor = MaterialTheme.colorScheme.background
-    ) { padding ->
-        var selectedArtifactForVault by remember { mutableStateOf<HistoricalArtifact?>(null) }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-        ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                item {
-                    EraOfTheDayCard(uiState.featuredArtifact)
-                }
-
-                // NEW: Proactive Video Discovery Prompt
-                val videoArtifact = uiState.artifacts.find { art -> 
-                    art.year == uiState.currentYear && art.mediaAssets.any { it.type == AssetType.VIDEO }
-                }
-                if (videoArtifact != null) {
-                    item {
-                        Surface(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-                            shape = MaterialTheme.shapes.medium,
-                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
-                            onClick = { selectedArtifactForVault = videoArtifact }
-                        ) {
-                            Row(
-                                modifier = Modifier.padding(16.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .size(40.dp)
-                                        .background(MaterialTheme.colorScheme.primary, CircleShape),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    Icon(Icons.Default.PlayArrow, null, tint = Color.Black)
-                                }
-                                Spacer(modifier = Modifier.width(16.dp))
-                                Column {
-                                    Text(
-                                        "Watch ${uiState.currentYear} Archive",
-                                        style = MaterialTheme.typography.titleMedium,
-                                        color = Color.White,
-                                        fontWeight = FontWeight.Bold
-                                    )
-                                    Text(
-                                        "Archival footage discovered in the vault",
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = Color.LightGray
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
-
-                if (uiState.artifacts.isEmpty()) {
-                    item {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 48.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                Text(
-                                    "Scroll the timeline to explore Kenya's history",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    color = Color.Gray
-                                )
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    "From the 11th Century to 2026",
-                                    style = MaterialTheme.typography.bodyMedium,
-                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
-                                )
-                            }
-                        }
-                    }
-                } else {
-                    item {
-                        Text(
-                            text = "Events around ${uiState.currentYear}",
+                            "Kenya Heritage Archive",
                             style = MaterialTheme.typography.titleLarge,
                             color = MaterialTheme.colorScheme.primary
                         )
+                    },
+                    actions = {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(end = 4.dp)
+                        ) {
+                            TextButton(onClick = { showPrivacyPolicy = true }) {
+                                Text(
+                                    "Privacy",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                                )
+                            }
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(
+                                "Guide",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.Gray
+                            )
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Switch(
+                                checked = isForeignerGuideEnabled,
+                                onCheckedChange = { isForeignerGuideEnabled = it },
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = MaterialTheme.colorScheme.primary
+                                )
+                            )
+                        }
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Color.Transparent
+                    )
+                )
+            },
+            bottomBar = {
+                TimelineScrubber(
+                    currentYear = uiState.currentYear,
+                    onYearChanged = viewModel::onYearChanged
+                )
+            },
+            containerColor = MaterialTheme.colorScheme.background
+        ) { padding ->
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)
+            ) {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(16.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp)
+                ) {
+                    item {
+                        EraOfTheDayCard(uiState.featuredArtifact)
                     }
-                    items(uiState.artifacts) { artifact ->
-                        ArtifactCard(
-                            artifact = artifact,
-                            isForeignerGuideEnabled = isForeignerGuideEnabled,
-                            onEnterVault = { selectedArtifactForVault = artifact }
-                        )
+
+                    // NEW: Proactive Video Discovery Prompt
+                    val videoArtifact = uiState.artifacts.find { art -> 
+                        art.year == uiState.currentYear && art.mediaAssets.any { it.type == AssetType.VIDEO }
+                    }
+                    if (videoArtifact != null) {
+                        item {
+                            Surface(
+                                modifier = Modifier.fillMaxWidth(),
+                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                                shape = MaterialTheme.shapes.medium,
+                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
+                                onClick = { selectedArtifactForVault = videoArtifact }
+                            ) {
+                                Row(
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Box(
+                                        modifier = Modifier
+                                            .size(40.dp)
+                                            .background(MaterialTheme.colorScheme.primary, CircleShape),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(Icons.Default.PlayArrow, null, tint = Color.Black)
+                                    }
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                    Column {
+                                        Text(
+                                            "Watch ${uiState.currentYear} Archive",
+                                            style = MaterialTheme.typography.titleMedium,
+                                            color = Color.White,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                        Text(
+                                            "Archival footage discovered in the vault",
+                                            style = MaterialTheme.typography.bodySmall,
+                                            color = Color.LightGray
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (uiState.artifacts.isEmpty()) {
+                        item {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 48.dp),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(
+                                        "Scroll the timeline to explore Kenya's history",
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        color = Color.Gray
+                                    )
+                                    Spacer(modifier = Modifier.height(8.dp))
+                                    Text(
+                                        "From the 11th Century to 2026",
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.6f)
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        item {
+                            Text(
+                                text = "Events around ${uiState.currentYear}",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                        items(uiState.artifacts) { artifact ->
+                            ArtifactCard(
+                                artifact = artifact,
+                                isForeignerGuideEnabled = isForeignerGuideEnabled,
+                                onEnterVault = { selectedArtifactForVault = artifact }
+                            )
+                        }
                     }
                 }
-            }
 
-            if (uiState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-
-            // Vault Gallery Overlay
-            if (selectedArtifactForVault != null) {
-                Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
-                    VaultGallery(
-                        artifact = selectedArtifactForVault!!,
-                        onClose = { selectedArtifactForVault = null }
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
+            }
+        }
+
+        // Vault Gallery Overlay (TRUE FULL SCREEN)
+        if (selectedArtifactForVault != null) {
+            BackHandler { selectedArtifactForVault = null }
+            
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black)
+            ) {
+                VaultGallery(
+                    artifact = selectedArtifactForVault!!,
+                    onClose = { selectedArtifactForVault = null }
+                )
             }
         }
     }
@@ -278,7 +304,7 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?) {
                 if (!artifact?.decadeDescription.isNullOrBlank()) {
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = artifact!!.decadeDescription!!,
+                        text = artifact.decadeDescription,
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.White.copy(alpha = 0.75f),
                         maxLines = 2,

@@ -7,45 +7,47 @@ package com.kenya.heritage.archive.data.util
 object GitHubAssetResolver {
     private const val BASE = "https://raw.githubusercontent.com/gideongeny/The-Kenya-Heritage-Archive/main"
 
-    // Pre-independence images: 76 total (index 0..75)
-    private val preImages = buildList {
-        add("$BASE/images/Pre%20Independence%20Kenya/Kenya-Tribes.webp")
-        add("$BASE/images/Pre%20Independence%20Kenya/download.jpg")
-        for (i in 1..41) add("$BASE/images/Pre%20Independence%20Kenya/download%20($i).jpg")
-        add("$BASE/images/Pre%20Independence%20Kenya/images.jpg")
-        for (i in 1..32) add("$BASE/images/Pre%20Independence%20Kenya/images%20($i).jpg")
-    }
-
-    // Post-independence images: 119 total
-    private val postImages = buildList {
-        add("$BASE/images/Post%20Independence%20Kenya/download.jpg")
-        for (i in 1..43) add("$BASE/images/Post%20Independence%20Kenya/download%20($i).jpg")
-        add("$BASE/images/Post%20Independence%20Kenya/images.jpg")
-        for (i in 1..67) add("$BASE/images/Post%20Independence%20Kenya/images%20($i).jpg")
-        add("$BASE/images/Post%20Independence%20Kenya/image_750x_649ab6eee0af1.jpg")
-        add("$BASE/images/Post%20Independence%20Kenya/rss-efe608864e18af3ee39bc62731d2786b53c3772947dw.webp")
+    /**
+     * Returns an image URL for the given year, pulling from the decade subfolders.
+     * Use a deterministic index (per era) to cycle through images in that folder.
+     */
+    fun imageForYear(year: Int, index: Int = 0): String {
+        val era = if (year < 1963) "Pre%20Independence%20Kenya" else "Post%20Independence%20Kenya"
+        val decade = (year / 10) * 10
+        
+        // We cycle through standard filenames provided by the user (download, images, etc.)
+        val filePatterns = listOf(
+            "download.jpg", "images.jpg", 
+            "download%20(1).jpg", "images%20(1).jpg",
+            "download%20(2).jpg", "images%20(2).jpg",
+            "download%20(3).jpg", "images%20(3).jpg",
+            "Kenya-Tribes.webp"
+        )
+        val fileName = filePatterns[index % filePatterns.size]
+        
+        return "$BASE/images/$era/${decade}s/$fileName"
     }
 
     /**
-     * Returns an image URL for the given year — rotates through the available images by decade.
+     * Returns a specific image from a decade folder.
      */
-    fun imageForYear(year: Int): String {
-        return if (year < 1963) {
-            val index = ((year - 1000) / 10) % preImages.size
-            preImages[index.coerceIn(0, preImages.size - 1)]
-        } else {
-            val index = ((year - 1963) / 5) % postImages.size
-            postImages[index.coerceIn(0, postImages.size - 1)]
-        }
+    fun specificImage(year: Int, fileNameWithExtension: String): String {
+        val era = if (year < 1963) "Pre%20Independence%20Kenya" else "Post%20Independence%20Kenya"
+        val decade = (year / 10) * 10
+        val encodedFile = fileNameWithExtension.replace(" ", "%20").replace("(", "%20(").replace(")", ")")
+        return "$BASE/images/$era/${decade}s/$encodedFile"
     }
-
-    /**
-     * Returns a deterministic image for a given decade (e.g., 1960, 1970, 1980...).
-     */
-    fun imageForDecade(decade: Int): String = imageForYear(decade)
 
     /**
      * Returns the GitHub raw video URL for a given video filename.
      */
     fun videoUrl(filename: String): String = "$BASE/videos/${filename.replace(" ", "%20")}"
+
+    /**
+     * Attempts to find a video for a year or keyword.
+     * This is used by the seeder to map videos like "MauMau" or "1963".
+     */
+    fun findVideoByKeyword(keyword: String, existingVideos: List<String>): String? {
+        return existingVideos.find { it.contains(keyword, ignoreCase = true) }?.let { videoUrl(it) }
+    }
 }

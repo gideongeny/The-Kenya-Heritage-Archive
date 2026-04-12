@@ -25,18 +25,36 @@ object HistoricalSeeder {
             period = "11th – 15th Century",
             epoch = "Pre-Colonial Statehood",
             banner = GitHubAssetResolver.imageForYear(1100),
-            images = (1100..1150 step 10).map { GitHubAssetResolver.imageForYear(it) },
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1100, it) },
             decade = "The 11th century saw the coastal city-states of Mombasa, Lamu, Malindi and Pate emerge as powerhouses of global trade. Arab, Persian, Indian, and Chinese merchants anchored in our harbours, exchanging silks and porcelain for our ivory, gold and iron.",
             narrative = """
                 Long before the first European sails appeared on our horizon, the coast of Kenya was already a global center of sophistication, wealth, and faith. From Lamu to Malindi, our ancestors built stone cities that rivaled those of the Mediterranean.
                 
                 They were the masters of the monsoon winds, navigating the Indian Ocean with dhows that carried ivory, gold, and iron to the far reaches of China and India. This was the era of the Swahili Golden Age — a time when our shores were a melting pot of Bantu roots and Eastern influences, birthing a language and a culture that would become the heartbeat of East Africa.
-                
-                Feel the pride of an era where Kenya was not a 'discovery' but a destination; a time of unparalleled architectural brilliance and scholarly pursuit. This is our foundation — built on trade, peace, and the salt of the sea.
             """.trimIndent(),
-            foreign = "The Swahili culture is a unique blend of African (Bantu) roots and centuries of interaction with Arab, Persian, and Indian traders. 'Swahili' itself comes from the Arabic word 'Sawahil', meaning 'Coasts'.",
-            significant = "The city of Gedi (Gede) near Malindi was flourishing — a sophisticated stone-walled city with running water, fine porcelain from China, and Islamic architecture.",
-            fun_ = "🤯 Fun Fact: Chinese porcelain shards found at Gedi ruins confirm direct trade with the Ming Dynasty in the 15th century — Kenya was truly connected to the world!"
+            foreign = "The Swahili culture is a unique blend of African (Bantu) roots and centuries of interaction with Arab, Persian, and Indian traders.",
+            significant = "The city of Gedi (Gede) near Malindi was flourishing — a sophisticated stone-walled city with running water.",
+            fun_ = "🤯 Fun Fact: Chinese porcelain shards found at Gedi ruins confirm direct trade with the Ming Dynasty!"
+        ),
+        artifact(
+            id = "ibn_battuta_1331",
+            title = "Ibn Battuta Visits Mombasa",
+            year = 1331,
+            period = "14th Century",
+            epoch = "Pre-Colonial Statehood",
+            banner = GitHubAssetResolver.imageForYear(1330),
+            images = (0..3).map { GitHubAssetResolver.imageForYear(1330, it) },
+            decade = "In 1331, the legendary Moroccan explorer Ibn Battuta arrived in Mombasa. He was stunned by the beauty and religious devotion of its people, describing it as a city of 'fine buildings and large mosques'.",
+            narrative = """
+                When Ibn Battuta anchored in Mombasa in 1331, he stepped into a world of immense culture and faith. He wrote of the 'Maani' people—deeply religious citizens who lived in high stone houses surrounded by fruit trees.
+                
+                This wasn't an isolated settlement; it was a jewel in a string of coastal city-states that stretched from Somalia to Mozambique. The architecture was intricate, the mosques were monuments of limestone and coral, and the people were dressed in the finest silks. 
+                
+                This period marks the zenith of pre-colonial coastal civilisation, where Kenya was the gateway to the African interior for the rest of the world.
+            """.trimIndent(),
+            foreign = "Ibn Battuta is often called the greatest traveller of the middle ages, having covered over 75,000 miles, more than Marco Polo.",
+            significant = "The 1300s saw the construction of some of the most beautiful coral mosques in East Africa, many of which still stand in Lamu and Old Town Mombasa.",
+            fun_ = "🤯 Fun Fact: Ibn Battuta was so impressed by the kindness of Mombasans that he stayed longer than planned just to enjoy their hospitality!"
         ),
         artifact(
             id = "interior_kingdoms_1400",
@@ -45,38 +63,150 @@ object HistoricalSeeder {
             period = "14th – 17th Century",
             epoch = "Interior Civilisations",
             banner = GitHubAssetResolver.imageForYear(1400),
-            images = (1400..1500 step 20).map { GitHubAssetResolver.imageForYear(it) },
-            decade = "While the Swahili Coast thrived, the interior of Kenya was alive with powerful communities — the Kikuyu farming the fertile ridges, the Maasai commanding vast pasturelands, and the Luo migrating southward from the Nile basin.",
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1400, it) },
+            decade = "While the Swahili Coast thrived, the interior of Kenya was alive with powerful communities — the Kikuyu farming the fertile ridges, the Maasai commanding vast pasturelands, and the Luo migrating southward.",
             narrative = """
-                The interior of Kenya in the 14th to 17th centuries was not empty wilderness — it was a dynamic world of kingdoms, councils and migrations. The Kikuyu, guided by their age-set system and the wisdom of the Kiama (council of elders), transformed the fertile slopes of Mount Kenya into productive agricultural heartlands.
+                The interior of Kenya in the 14th to 17th centuries was a dynamic world of kingdoms and migrations. The Kikuyu transformed the fertile slopes of Mount Kenya into productive agricultural heartlands.
                 
-                The Maasai, fierce pastoralists with a warrior culture refined over centuries, spread across the Great Rift Valley. Their morani — young warriors — cultivated a martial tradition that would later make them respected by colonialists and beloved by the world.
-                
-                In Western Kenya, the Wanga Kingdom rose in the 17th century, one of the few centralized monarchies in the region, led by the Nabongo. Meanwhile, the Luo, Kamba, and Somali communities were carving out their own identities across the land we call Kenya.
+                The Maasai spread across the Great Rift Valley, cultivating a martial tradition that would later make them respected world-wide. In Western Kenya, the Wanga Kingdom rose as a centralised monarchy led by the Nabongo.
             """.trimIndent(),
-            foreign = "The Maasai are one of the world's most recognisable cultures. Their red 'shuka' robes, beaded jewellery, and iconic jumping dances (Adumu) are symbols of Kenyan identity celebrated globally.",
-            significant = "The Wanga Kingdom — Kenya's earliest centralised state — was established in Western Kenya, predating British arrival by centuries.",
-            fun_ = "🤯 Fun Fact: The Maasai traditionally measured wealth in cattle. A man with 50 cattle was considered wealthy; some elders owned over 1,000 head!"
+            foreign = "The Maasai red 'shuka' robes and beaded jewellery are symbols of Kenyan identity celebrated globally.",
+            significant = "The Wanga Kingdom predated British arrival by centuries as a centralised Kenyan state.",
+            fun_ = "🤯 Fun Fact: The Maasai traditionally measured wealth in cattle — some elders owned over 1,000 head!"
         ),
         artifact(
-            id = "portuguese_resistance_1500",
-            title = "Resisting the Portuguese",
-            year = 1505,
-            period = "16th – 17th Century",
-            epoch = "The Age of Resistance",
-            banner = GitHubAssetResolver.imageForYear(1505),
-            images = listOf(GitHubAssetResolver.imageForYear(1505)),
-            decade = "The 16th century brought violent Portuguese aggression to the Kenyan coast. For two centuries, the people of Mombasa and Malindi resisted, endured, and ultimately outlasted colonial occupation.",
+            id = "vasco_da_gama_1498",
+            title = "Vasco da Gama & The Pillar of Malindi",
+            year = 1498,
+            period = "Late 15th Century",
+            epoch = "Early Encounters",
+            banner = GitHubAssetResolver.imageForYear(1490),
+            images = (0..2).map { GitHubAssetResolver.imageForYear(1490, it) },
+            decade = "In 1498, Portuguese explorer Vasco da Gama arrived in Malindi after being rejected by Mombasa. He was welcomed by the Sultan, setting the stage for centuries of European influence.",
             narrative = """
-                In 1505, Portuguese warships bombarded and looted Mombasa, beginning a painful two-century occupation of the Kenyan coast. Fort Jesus — the imposing fortress overlooking the Old Town — was their instrument of control, completed in 1593. But it was never truly theirs.
+                The arrival of Vasco da Gama in 1498 was a turning point. Malindi, unlike its rival Mombasa, chose diplomacy. The Sultan provided da Gama with a guide, Ahmad ibn Mājid, who helped him find the route to India.
                 
-                The people of Mombasa rose against their occupiers multiple times. Most famously, in 1696–1698, the Mazrui and Omani allies laid siege to Fort Jesus for a gruelling 33 months — one of the longest sieges in African history. The Portuguese garrison fell, starved and exhausted. Mombasa was free.
+                In gratitude, the Portuguese built a coral pillar capped with a cross (padrão) in Malindi—a landmark that still stands today as one of the oldest European monuments in Africa.
                 
-                This chapter is a story of extraordinary African resilience — of communities refusing to surrender their identity, trade routes, or dignity to foreign powers.
+                But this hospitality came at a price. It began the 'Age of the Caravels', where Portuguese naval power would soon attempt to dominate the Indian Ocean and the beautiful Kenyan coast.
             """.trimIndent(),
-            foreign = "Fort Jesus in Mombasa is now a UNESCO World Heritage Site. Built by the Portuguese in 1593, it changed hands 9 times over 4 centuries. You can visit it today as a museum.",
-            significant = "The Omani siege of Fort Jesus (1696–98) lasted 33 months — the Portuguese garrison was ultimately defeated by starvation and disease, ending their grip on the coast.",
-            fun_ = "🤯 Fun Fact: During the 3-year siege of Fort Jesus, a Portuguese relief fleet that arrived to help found everyone inside dead from plague — and sailed away without firing a shot!"
+            foreign = "The Vasco da Gama Pillar in Malindi is a major tourist site and a symbol of early Kenya-Portugal relations.",
+            significant = "This encounter established Malindi as a key strategic ally for the Portuguese for over a century.",
+            fun_ = "🤯 Fun Fact: The original pillar was actually placed near the Sultan's palace, but was moved to its current location on the cliffside in the 16th century!"
+        ),
+        artifact(
+            id = "fort_jesus_1593",
+            title = "The Sentinel: Building Fort Jesus",
+            year = 1593,
+            period = "16th Century",
+            epoch = "The Age of Resistance",
+            banner = GitHubAssetResolver.imageForYear(1590),
+            images = (0..3).map { GitHubAssetResolver.imageForYear(1590, it) },
+            decade = "In 1593, the Portuguese completed Fort Jesus in Mombasa. Built to secure their spice routes, this massive coral fortress would become the bloodiest battlefield in Kenyan coastal history.",
+            narrative = """
+                Fort Jesus is an architectural masterpiece of the Italian Renaissance, but its purpose was grim: dominance. Located on Mombasa Island, it gave the Portuguese a 'God's eye view' of the harbor.
+                
+                For over a century, the fortress was the center of power on the East African coast. It changed hands (and flags) nine times, witness to countless sieges and heroic stand-offs by the people of Mombasa.
+                
+                Today, the fort sleeps peacefully as a museum, but its thick walls still hold the echoes of a time when Kenya was the frontline of a global struggle between empires.
+            """.trimIndent(),
+            foreign = "Fort Jesus was designed by Giovanni Battista Cairati and built using local coral and slave labor.",
+            significant = "UNESCO World Heritage Site since 2011, it is the most preserved 16th-century Portuguese fort in Africa.",
+            fun_ = "🤯 Fun Fact: If you look at the fort from the air, it is in the shape of a man (Jesus) lying on his back!"
+        ),
+        artifact(
+            id = "omani_conquest_1698",
+            title = "The Great Siege: Fall of the Portuguese",
+            year = 1698,
+            period = "Late 17th Century",
+            epoch = "The Age of Resistance",
+            banner = GitHubAssetResolver.imageForYear(1690),
+            images = (0..4).map { GitHubAssetResolver.imageForYear(1690, it) },
+            decade = "In 1698, after a gruelling 33-month siege, Omani Arab forces and local Swahili allies finally captured Fort Jesus, ending nearly 200 years of Portuguese occupation.",
+            narrative = """
+                The Great Siege of Fort Jesus (1696-1698) is one of the most legendary stories of endurance in history. For almost three years, the skeleton-crew inside the fort held out against thousands of Omani warriors.
+                
+                By the end, starvation and the plague had left fewer than a dozen survivors. When the Omani finally scaled the walls, the Portuguese era was over. The 'Mazrui' dynasty rose in Mombasa, frequently defying even their Omani overlords.
+                
+                This era saw the coast return to its Islamic roots and trade flourish once more, as the influence of the Sultan of Zanzibar began to permeate the region.
+            """.trimIndent(),
+            foreign = "The Mazrui family remained a powerful political force in Mombasa for generations after the Portuguese left.",
+            significant = "1698 marks the end of European dominance on the Kenyan coast until the British arrived in the 19th century.",
+            fun_ = "🤯 Fun Fact: The final survivor of the siege was a brave African woman who reportedly fought alongside the soldiers until the very end!"
+        ),
+        artifact(
+            id = "missionary_start_1844",
+            title = "Krapf & The First Mission: Rabai",
+            year = 1844,
+            period = "19th Century",
+            epoch = "Early Encounters",
+            banner = GitHubAssetResolver.imageForYear(1840),
+            images = (0..2).map { GitHubAssetResolver.imageForYear(1840, it) },
+            decade = "In 1844, Johann Ludwig Krapf arrived in Kenya. He established the first Christian mission in Rabai and became the first European to set eyes on Mount Kenya.",
+            narrative = """
+                Johann Krapf didn't just bring a new faith; he brought a passion for language and exploration. He spent years in Rabai, learning Swahili and writing the first Swahili-English dictionary.
+                
+                When he told the world about a 'snow-capped mountain on the equator', scientists in Europe laughed and called it a fantasy. They couldn't believe snow could exist in the burning heat of Africa.
+                
+                Krapf's arrival marked the beginning of Western education and the first step of the missionary influence that would reshape Kenyan society over the next century.
+            """.trimIndent(),
+            foreign = "Rabai, near Mombasa, is home to the first church ever built in Kenya, and you can still visit Krapf's original house today.",
+            significant = "The first Swahili-English dictionary was produced in Rabai, bridging the gap between two cultures.",
+            fun_ = "🤯 Fun Fact: Krapf was so dedicated to his Swahili dictionary that he reportedly wrote parts of it while suffering from 12 severe bouts of malaria!"
+        ),
+        artifact(
+            id = "ibeac_charter_1888",
+            title = "The Scramble for Kenya: IBEAC Charter",
+            year = 1888,
+            period = "Late 19th Century",
+            epoch = "Colonial Genesis",
+            banner = GitHubAssetResolver.imageForYear(1880),
+            images = (0..3).map { GitHubAssetResolver.imageForYear(1880, it) },
+            decade = "In 1888, the Imperial British East Africa Company (IBEAC) was granted a charter. This was the start of 'Kenya' as a corporate entity before it became a colony.",
+            narrative = """
+                Kenya was essentially 'owned' by a trading company before the British government took over. Sir William Mackinnon and the IBEAC aimed to control trade routes from the coast to Uganda.
+                
+                They established several outposts and began the difficult task of 'administering' a vast land they barely understood. But the company struggled financially, unable to cope with the costs of resistance and the railway.
+                
+                Their charter set the stage for the formal declaration of the British East Africa Protectorate just seven years later.
+            """.trimIndent(),
+            foreign = "IBEAC was inspired by the British East India Company, which had previously secured British control over India.",
+            significant = "1888 marks the transition from purely coastal trade to the systematic annexation of the Kenyan interior.",
+            fun_ = "🤯 Fun Fact: The IBEAC had its own currency and postage stamps—making Sir William Mackinnon the 'King' of Kenya for a brief, weird corporate decade!"
+        ),
+        artifact(
+            id = "protectorate_1895",
+            title = "Declaration of the Protectorate",
+            year = 1895,
+            period = "June 15, 1895",
+            epoch = "Colonial Genesis",
+            banner = GitHubAssetResolver.imageForYear(1890),
+            images = (0..4).map { GitHubAssetResolver.imageForYear(1890, it) },
+            decade = "On June 1, 1895, the British government took over from the failing IBEAC. By July 1, the British East Africa Protectorate was formally declared in Mombasa.",
+            narrative = """
+                The transfer of power in 1895 was a quiet ceremony in Mombasa, but its consequences were seismic. Sir Arthur Hardinge became the first Commissioner.
+                
+                The British government was now officially in charge of the strip of land stretching from the Indian Ocean to the Great Lakes. The era of the company was over; the era of the official Colony had begun.
+                
+                Within months, the surveyors for the Uganda Railway would begin their work, and the landscape of 'Kenya' would be changed forever by steel and steam.
+            """.trimIndent(),
+            foreign = "A 'Protectorate' was a legal term used by the British to exercise control over a territory without technically annexing it as a 'Colony' yet.",
+            significant = "This declaration ended centuries of Sultanate/Coastal sovereignty and placed the entire region under London's direct rule.",
+            fun_ = "🤯 Fun Fact: The British 'bought' the rights to Kenya from the failing IBEAC for just £250,000 — today, that wouldn't buy a single apartment in Westlands, Nairobi!"
+        ),
+        artifact(
+            id = "imperial_beac_1890",
+            title = "The Iron Serpent Arrives: The Uganda Railway",
+            year = 1896,
+            period = "Late 19th – Early 20th Century",
+            epoch = "Colonial Subjugation",
+            banner = GitHubAssetResolver.imageForYear(1890, 5),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1890, it) },
+            decade = "The 1890s brought the Imperial British East Africa Company and the controversial Uganda Railway — a steel line that transformed it forever.",
+            narrative = "Built at enormous human cost with over 32,000 Indian workers. Hundreds died from disease and the Tsavo man-eating lions.",
+            foreign = "The 'Lunatic Express' cost £5 million — a fortune in 1900.",
+            significant = "Nairobi was founded in 1899 as a railroad supply depot.",
+            fun_ = "🤯 Fun Fact: The two Tsavo lions are now on display at the Field Museum in Chicago!"
         )
     )
 
@@ -87,13 +217,13 @@ object HistoricalSeeder {
             year = 1900,
             period = "1900 - 1909",
             epoch = "Early Colonial Era",
-            banner = GitHubAssetResolver.imageForDecade(1900),
-            images = (1900..1909).map { GitHubAssetResolver.imageForYear(it) },
+            banner = GitHubAssetResolver.imageForYear(1900),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1900, it) },
             decade = "The turn of the century saw the British consolidate their control through the Uganda Railway, as Nairobi transformed from a swampy depot into a burgeoning colonial town.",
-            narrative = "The first decade of the 1900s was a period of profound transition. While the British East Africa Protectorate was formally established, the indigenous communities faced the sudden reality of land alienation. Nairobi, known as 'Enkare Nyrobi' (Place of Cool Waters) by the Maasai, was becoming the administrative heart of a new empire. This decade saw the introduction of the first currency, the Indian Rupee, and the arrival of thousands of Indian laborers who would build the backbone of the nation's infrastructure.",
-            foreign = "The name 'Nairobi' comes from the Maasai phrase 'Enkare Nyrobi', which means 'cool water', referring to the Nairobi River that once flowed freely through the swampy landscape.",
-            significant = "The first Legislative Council (LegCo) was established in 1907, marking the beginning of formal colonial governance in Kenya.",
-            fun_ = "🤯 Fun Fact: Nairobi was almost abandoned in 1902 after a plague outbreak, but the railway was so important that the British decided to stay and build a proper town instead!"
+            narrative = "The first decade of the 1900s was a period of profound transition. Nairobi, known as 'Enkare Nyrobi' (Place of Cool Waters) by the Maasai, was becoming the administrative heart of a new empire.",
+            foreign = "The name 'Nairobi' comes from the Maasai phrase 'Enkare Nyrobi', which means 'cool water'.",
+            significant = "The first Legislative Council (LegCo) was established in 1907.",
+            fun_ = "🤯 Fun Fact: Nairobi was almost abandoned in 1902 after a plague outbreak!"
         ),
         artifact(
             id = "colonial_1910",
@@ -101,13 +231,13 @@ object HistoricalSeeder {
             year = 1910,
             period = "1910 - 1919",
             epoch = "Early Colonial Era",
-            banner = GitHubAssetResolver.imageForDecade(1910),
-            images = listOf(GitHubAssetResolver.imageForYear(1914)),
+            banner = GitHubAssetResolver.imageForYear(1910),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1910, it) },
             decade = "The 1910s were defined by the influx of white settlers in the 'White Highlands' and the mobilization of Kenyans for World War I.",
-            narrative = "During this decade, the 'White Highlands' policy was solidified, pushing indigenous communities into reserves. When WWI broke out in 1914, over 150,000 Kenyans were recruited as 'Carrier Corps' to support the British campaign against the Germans in Tanganyika. Thousands died from disease and exhaustion, yet this experience exposed many Kenyans to a broader world and planted the first seeds of organized political consciousness.",
-            foreign = "The Carrier Corps (Kariakor) was a labor unit where thousands of Africans served. Today, several areas in Nairobi and other towns are still called 'Kariakor' in memory of their service.",
-            significant = "The Carrier Corps mobilization (1914-1918) saw the largest gathering of diverse Kenyan tribes in history up to that point, inadvertently fostering a shared identity.",
-            fun_ = "🤯 Fun Fact: The first motorized vehicles began appearing on Nairobi's muddy streets during this decade, often getting stuck for days during the rainy season!"
+            narrative = "During this decade, the 'White Highlands' policy was solidified. In 1914, over 150,000 Kenyans were recruited as 'Carrier Corps'.",
+            foreign = "Several areas in Nairobi are still called 'Kariakor' in memory of the Carrier Corps.",
+            significant = "The Carrier Corps mobilization (1914-1918) fostered a shared identity.",
+            fun_ = "🤯 Fun Fact: The first motorized vehicles began appearing on Nairobi's muddy streets during this decade!"
         ),
         artifact(
             id = "colonial_1920",
@@ -115,13 +245,14 @@ object HistoricalSeeder {
             year = 1920,
             period = "1920 - 1929",
             epoch = "Organized Resistance",
-            banner = GitHubAssetResolver.imageForDecade(1920),
-            images = listOf(GitHubAssetResolver.imageForYear(1921)),
+            banner = GitHubAssetResolver.imageForYear(1920),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1920, it) },
+            videos = listOf("An Open Air Xmas (1925).mp4"),
             decade = "The 1920s marked the birth of formal African political organizations, led by pioneers like Harry Thuku.",
-            narrative = "In 1920, Kenya formally became a Colony. The 'Kipande' system was introduced to control African movement. In response, Harry Thuku formed the East African Association in 1921, demanding better wages and land rights. His arrest in 1922 led to a massive protest in Nairobi where Mary Nyanjiru famously challenged the men to act, a moment of extraordinary female leadership in our history.",
-            foreign = "The 'Kipande' was an identification document that Africans were forced to wear in a metal container around their necks, a symbol of colonial suppression and control.",
-            significant = "The Harry Thuku protests of 1922 in Nairobi were the first major urban uprising against colonial rule, proving that Kenyans would not stay silent.",
-            fun_ = "🤯 Fun Fact: Harry Thuku used to use the telegraph system—the internet of the 1920s—to send protest messages directly to the British Parliament in London!"
+            narrative = "In 1920, Kenya formally became a Colony. The 'Kipande' system was introduced. Harry Thuku formed the East African Association in 1921.",
+            foreign = "The 'Kipande' was an identification document that Africans were forced to wear around their necks.",
+            significant = "The Harry Thuku protests of 1922 in Nairobi were the first major urban uprising.",
+            fun_ = "🤯 Fun Fact: Harry Thuku used the telegraph system to send protest messages directly to the British Parliament!"
         )
     )
 
@@ -132,66 +263,48 @@ object HistoricalSeeder {
             year = 1930,
             period = "1930 - 1939",
             epoch = "Organized Resistance",
-            banner = GitHubAssetResolver.imageForDecade(1930),
-            images = listOf(GitHubAssetResolver.imageForYear(1930)),
-            decade = "As the Great Depression hit the world, Kenyans doubled down on education and cultural preservation through independent schools.",
-            narrative = "The 1930s were years of economic hardship but cultural resilience. The Kikuyu Independent Schools Association (KISA) was formed, allowing Kenyans to educate their children without colonial or missionary control. This was a decade of intense debate over traditional practices and the role of Western influence. Meanwhile, Jomo Kenyatta was in London, representing Kenyan interests and writing 'Facing Mount Kenya', a seminal work on Gikuyu culture.",
-            foreign = "Independent schools were a vital part of the resistance, allowing Kenyans to maintain their cultural identity while gaining the education needed to fight for independence.",
-            significant = "Jomo Kenyatta published 'Facing Mount Kenya' in 1938, presenting Kenyan culture to the world as sophisticated and worthy of respect.",
-            fun_ = "🤯 Fun Fact: While in London in the 30s, Jomo Kenyatta reportedly worked as an extra in several British films to make ends meet!"
+            banner = GitHubAssetResolver.imageForYear(1930),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1930, it) },
+            decade = "As the Great Depression hit the world, Kenyans doubled down on education and cultural preservation.",
+            narrative = "The 1930s were years of economic hardship but cultural resilience. Jomo Kenyatta was in London, representing Kenyan interests.",
+            foreign = "Independent schools allowed Kenyans to maintain their identity while gaining education.",
+            significant = "Jomo Kenyatta published 'Facing Mount Kenya' in 1938.",
+            fun_ = "🤯 Fun Fact: While in London in the 30s, Jomo Kenyatta worked as an extra in several British films!"
         ),
         artifact(
             id = "colonial_1940",
-            title = "The World at War & Coming Home: 1940s",
+            title = "The World at War: 1940s",
             year = 1940,
             period = "1940 - 1949",
             epoch = "The Road to Freedom",
-            banner = GitHubAssetResolver.imageForDecade(1940),
-            images = listOf(GitHubAssetResolver.imageForYear(1944)),
-            decade = "World War II saw Kenyan soldiers fighting in Burma and Ethiopia, returning home with new skills and an unshakeable desire for freedom.",
-            narrative = "The 1940s changed everything. Over 75,000 Kenyans served in the King’s African Rifles during WWII. They fought in the jungles of Burma and the mountains of Ethiopia, realizing that the 'European masters' were as human and vulnerable as anyone else. Upon returning, these veterans became the backbone of the independence movement. In 1944, the Kenya African Study Union (later KANU) was formed, marking the start of a unified political front.",
-            foreign = "Many Kenyan veterans of WWII used their military experience to form the elite leadership of the Mau Mau forest fighters in the following decade.",
-            significant = "The first African, Eliud Mathu, was appointed to the Legislative Council in 1944, giving Kenyans a direct (though limited) voice in government.",
-            fun_ = "🤯 Fun Fact: Kenyan soldiers in Burma were famous for their ability to navigate dense jungles, often outperforming British units in traditional tracking skills!"
+            banner = GitHubAssetResolver.imageForYear(1940),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1940, it) },
+            decade = "World War II saw Kenyan soldiers fighting in Burma and Ethiopia, returning home with renewed desire for freedom.",
+            narrative = "Over 75,000 Kenyans served in the King’s African Rifles. Upon returning, veterans became the backbone of the independence movement.",
+            foreign = "Many Kenyan veterans of WWII formed the elite leadership of the Mau Mau fighters.",
+            significant = "Eliud Mathu was appointed to the Legislative Council in 1944.",
+            fun_ = "🤯 Fun Fact: Kenyan soldiers in Burma were famous for their jungle navigation skills!"
         )
     )
 
-    // ─────────────────────────────────────────────────────────────
-    // COLONIAL ERA (1888–1963)
-    // ─────────────────────────────────────────────────────────────
     private fun colonialEpoch() = listOf(
-        artifact(
-            id = "imperial_beac_1890",
-            title = "The Iron Serpent Arrives: The Uganda Railway",
-            year = 1896,
-            period = "Late 19th – Early 20th Century",
-            epoch = "Colonial Subjugation",
-            banner = GitHubAssetResolver.imageForYear(1896),
-            images = listOf(GitHubAssetResolver.imageForYear(1895), GitHubAssetResolver.imageForYear(1900)),
-            decade = "The 1890s brought the Imperial British East Africa Company and the controversial Uganda Railway — a steel line that bisected Kenya and transformed it forever, for better and for worse.",
-            narrative = """
-                They called it the 'Lunatic Express' — a railway stretching nearly 900 kilometres from Mombasa to Lake Victoria, built at enormous human cost. Over 32,000 workers, mostly from India, were brought to Kenya. Hundreds died from disease, harsh conditions, and the famous man-eating lions of Tsavo that stalked the workers' camps in 1898.
-                
-                But for the British, the railway was strategic gold — a lifeline to Uganda and control of the Nile. Nairobi, which did not exist in 1895, grew up as a railway camp and quickly became the capital of British East Africa by 1907.
-                
-                For Kenyans, the railway was a double-edged sword. It brought disruption, land alienation, and foreign settlers. But it also unknowingly laid the foundation for a future nation.
-            """.trimIndent(),
-            foreign = "The Uganda Railway — also called the 'Lunatic Line' — cost £5 million (a fortune in 1900) and the lives of hundreds of workers. The Tsavo man-eaters (two lions) reportedly killed 135 workers.",
-            significant = "Nairobi was founded in 1899 as a railroad supply depot. Within a decade, it became the capital of British East Africa — the city was born from the railway.",
-            fun_ = "🤯 Fun Fact: The two Tsavo lions that terrorised railway workers are now stuffed and on display at the Field Museum in Chicago, USA — far from home!"
-        ),
         artifact(
             id = "mau_mau_struggle",
             title = "The Forest Warriors: The Mau Mau Uprising",
             year = 1952,
             period = "1952 – 1960",
             epoch = "The Road to Freedom",
-            banner = GitHubAssetResolver.imageForYear(1952),
-            images = (1952..1959).map { GitHubAssetResolver.imageForYear(it) },
+            banner = GitHubAssetResolver.imageForYear(1950),
+            images = (0..7).map { GitHubAssetResolver.imageForYear(1950, it) },
             videos = listOf(
                 "Capture of Dedan Kimathi _ _Mau Mau_ Leader _ Kenya Land and Freedom Army (KLFA) _ October 1956.mp4",
                 "Selected Originals - Mau Mau - Lari Massacre Trial (1953).mp4",
-                "Amnesty offer to maumau.mp4"
+                "Amnesty offer to maumau.mp4",
+                "Selected Originals - Long Live The Queen Aka Queen Elizabeth II Returns From Kenya (1952).mp4",
+                "New Parliament Building In Nairobi (1954).mp4",
+                "General Nicholson Visits Kenya (1953).mp4",
+                "Lancashire Fusiliers In Kenya (1953).mp4",
+                "Native Farming (1950-1959).mp4"
             ),
             decade = "The 1950s were Kenya's most turbulent decade — a decade of fire, sacrifice, and the sacred oath of freedom. The Mau Mau uprising shook the British Empire to its core.",
             narrative = """
