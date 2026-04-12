@@ -2,82 +2,81 @@ package com.kenya.heritage.archive.data.util
 
 /**
  * The Source of Truth for all media assets in the GitHub repository.
- * This manifest prevents "blank boxes" by ensuring the app only requests
- * URLs that actually exist.
+ * Filenames are stored as RAW strings. Encoding happens at the resolver level.
  */
 object MediaManifest {
     
     val imagesByDecade = mapOf(
         "Pre Independence Kenya/1890s" to listOf(
-             "images%20(1).jpg", "images%20(9).jpg"
+             "images (1).jpg", "images (9).jpg"
         ),
         "Pre Independence Kenya/1910s" to listOf(
-             "download%20(27).jpg", "download%20(31).jpg", "download%20(4).jpg", "download%20(8).jpg",
-             "images%20(3).jpg", "images%20(4).jpg", "images%20(6).jpg", "images%20(8).jpg", "images.jpg",
+             "download (27).jpg", "download (31).jpg", "download (4).jpg", "download (8).jpg",
+             "images (3).jpg", "images (4).jpg", "images (6).jpg", "images (8).jpg", "images.jpg",
              "Kenya-Tribes.webp"
         ),
         "Pre Independence Kenya/1920s" to listOf(
-             "download%20(1).jpg", "download%20(12).jpg", "download%20(18).jpg", "download%20(2).jpg",
-             "download%20(25).jpg", "download%20(3).jpg", "download%20(40).jpg", "download%20(5).jpg",
-             "download%20(7).jpg", "images%20(11).jpg", "images%20(2).jpg", "images%20(5).jpg"
+             "download (1).jpg", "download (12).jpg", "download (18).jpg", "download (2).jpg",
+             "download (25).jpg", "download (3).jpg", "download (40).jpg", "download (5).jpg",
+             "download (7).jpg", "images (11).jpg", "images (2).jpg", "images (5).jpg"
         ),
         "Pre Independence Kenya/1930s" to listOf(
-             "download%20(10).jpg", "download%20(13).jpg", "download%20(19).jpg", "download%20(26).jpg",
-             "images%20(12).jpg", "images%20(19).jpg"
+             "download (10).jpg", "download (13).jpg", "download (19).jpg", "download (26).jpg",
+             "images (12).jpg", "images (19).jpg"
         ),
         "Pre Independence Kenya/1940s" to listOf(
-             "download%20(14).jpg", "download%20(17).jpg", "download%20(20).jpg", "download%20(21).jpg",
-             "download%20(23).jpg", "download%20(28).jpg", "download%20(29).jpg", "download%20(30).jpg",
-             "download%20(32).jpg", "download%20(39).jpg", "download%20(9).jpg", "images%20(25).jpg", "images%20(7).jpg"
+             "download (14).jpg", "download (17).jpg", "download (20).jpg", "download (21).jpg",
+             "download (23).jpg", "download (28).jpg", "download (29).jpg", "download (30).jpg",
+             "download (32).jpg", "download (39).jpg", "download (9).jpg", "images (25).jpg", "images (7).jpg"
         ),
         "Pre Independence Kenya/1950s" to listOf(
-             "download%20(16).jpg", "download%20(22).jpg", "download%20(24).jpg", "download%20(33).jpg",
-             "download%20(34).jpg", "download%20(35).jpg", "download%20(36).jpg", "download%20(37).jpg",
-             "download%20(41).jpg", "download%20(6).jpg", "download.jpg", "images%20(10).jpg",
-             "images%20(13).jpg", "images%20(14).jpg", "images%20(15).jpg", "images%20(16).jpg",
-             "images%20(17).jpg", "images%20(18).jpg", "images%20(20).jpg", "images%20(21).jpg",
-             "images%20(22).jpg", "images%20(23).jpg", "images%20(24).jpg", "images%20(26).jpg",
-             "images%20(27).jpg", "images%20(28).jpg", "images%20(29).jpg", "images%20(30).jpg",
-             "images%20(31).jpg", "images%20(32).jpg"
+             "download (16).jpg", "download (22).jpg", "download (24).jpg", "download (33).jpg",
+             "download (34).jpg", "download (35).jpg", "download (36).jpg", "download (37).jpg",
+             "download (41).jpg", "download (6).jpg", "download.jpg", "images (10).jpg",
+             "images (13).jpg", "images (14).jpg", "images (15).jpg", "images (16).jpg",
+             "images (17).jpg", "images (18).jpg", "images (20).jpg", "images (21).jpg",
+             "images (22).jpg", "images (23).jpg", "images (24).jpg", "images (26).jpg",
+             "images (27).jpg", "images (28).jpg", "images (29).jpg", "images (30).jpg",
+             "images (31).jpg", "images (32).jpg"
         ),
         "Post Independence Kenya/1960s" to listOf(
-             "download%20(3).jpg", "download%20(4).jpg", "download%20(42).jpg", "download%20(5).jpg",
-             "download%20(6).jpg", "download%20(8).jpg", "images%20(1).jpg", "images.jpg"
+             "download (3).jpg", "download (4).jpg", "download (42).jpg", "download (5).jpg",
+             "download (6).jpg", "download (8).jpg", "images (1).jpg", "images.jpg"
         ),
         "Post Independence Kenya/1970s" to listOf(
-             "download%20(1).jpg", "download%20(15).jpg", "download%20(2).jpg", "images%20(11).jpg",
-             "images%20(2).jpg", "images%20(3).jpg", "images%20(4).jpg", "images%20(5).jpg", "images%20(6).jpg"
+             "download (1).jpg", "download (15).jpg", "download (2).jpg", "images (11).jpg",
+             "images (2).jpg", "images (3).jpg", "images (4).jpg", "images (5).jpg", "images (6).jpg"
         ),
         "Post Independence Kenya/1980s" to listOf(
-             "download%20(18).jpg", "download%20(38).jpg", "download%20(3).jpg", "download%20(7).jpg",
-             "download%20(8).jpg", "images%20(1).jpg", "images%20(12).jpg", "images%20(14).jpg",
-             "images%20(15).jpg", "images%20(17).jpg", "images%20(18).jpg"
+             "download (18).jpg", "download (38).jpg", "download (3).jpg", "download (7).jpg",
+             "download (8).jpg", "images (1).jpg", "images (12).jpg", "images (14).jpg",
+             "images (15).jpg", "images (17).jpg", "images (18).jpg"
         ),
         "Post Independence Kenya/1990s" to listOf(
-             "images%20(25).jpg", "images%20(27).jpg", "images%20(28).jpg", "images%20(31).jpg",
-             "images%20(34).jpg", "images%20(41).jpg", "images%20(43).jpg", "images%20(50).jpg",
-             "images%20(61).jpg", "images%20(9).jpg"
+             "images (25).jpg", "images (27).jpg", "images (28).jpg", "images (31).jpg",
+             "images (34).jpg", "images (41).jpg", "images (43).jpg", "images (50).jpg",
+             "images (61).jpg", "images (9).jpg"
         ),
         "Post Independence Kenya/2000s" to listOf(
-             "download%20(22).jpg", "download%20(23).jpg", "download%20(24).jpg", "download%20(29).jpg",
-             "download%20(40).jpg", "images%20(18).jpg", "images%20(26).jpg", "images%20(29).jpg",
-             "images%20(32).jpg", "images%20(36).jpg", "images%20(38).jpg", "images%20(44).jpg",
-             "images%20(46).jpg", "images%20(47).jpg", "images%20(49).jpg", "images%20(51).jpg",
-             "images%20(6).jpg", "images%20(66).jpg"
+             "download (22).jpg", "download (23).jpg", "download (24).jpg", "download (29).jpg",
+             "download (40).jpg", "images (18).jpg", "images (26).jpg", "images (29).jpg",
+             "images (32).jpg", "images (36).jpg", "images (38).jpg", "images (44).jpg",
+             "images (46).jpg", "images (47).jpg", "images (49).jpg", "images (51).jpg",
+             "images (6).jpg", "images (66).jpg"
         ),
         "Post Independence Kenya/2010s" to listOf(
-             "download%20(25).jpg", "download%20(26).jpg", "download%20(27).jpg", "download%20(30).jpg",
-             "download%20(31).jpg", "download%20(32).jpg", "download%20(39).jpg", "download%20(41).jpg",
-             "images%20(16).jpg", "images%20(24).jpg", "images%20(37).jpg", "images%20(40).jpg",
-             "images%20(5).jpg", "images%20(53).jpg", "images%20(54).jpg", "images%20(55).jpg",
-             "images%20(60).jpg", "images%20(62).jpg", "images%20(8).jpg"
+             "download (25).jpg", "download (26).jpg", "download (27).jpg", "download (30).jpg",
+             "download (31).jpg", "download (32).jpg", "download (39).jpg", "download (41).jpg",
+             "images (16).jpg", "images (24).jpg", "images (37).jpg", "images (40).jpg",
+             "images (5).jpg", "images (53).jpg", "images (54).jpg", "images (55).jpg",
+             "images (60).jpg", "images (62).jpg", "images (8).jpg"
         ),
         "Post Independence Kenya/2020s" to listOf(
-             "20231020_133621.jpg", "download%20(28).jpg", "download%20(33).jpg", "download%20(34).jpg",
-             "download%20(35).jpg", "download%20(36).jpg", "download%20(37).jpg", "download%20(43).jpg",
-             "images%20(30).jpg", "images%20(39).jpg", "images%20(42).jpg", "images%20(52).jpg",
-             "images%20(56).jpg", "images%20(57).jpg", "images%20(58).jpg", "images%20(63).jpg",
-             "images%20(64).jpg", "images%20(65).jpg", "images%20(67).jpg"
+             "20231020_133621.jpg", "download (28).jpg", "download (33).jpg", "download (34).jpg",
+             "download (35).jpg", "download (36).jpg", "download (37).jpg", "download (43).jpg",
+             "images (30).jpg", "images (39).jpg", "images (42).jpg", "images (52).jpg",
+             "images (56).jpg", "images (57).jpg", "images (58).jpg", "images (63).jpg",
+             "images (64).jpg", "images (65).jpg", "images (67).jpg"
         )
     )
 

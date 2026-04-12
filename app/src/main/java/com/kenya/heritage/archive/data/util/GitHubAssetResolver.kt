@@ -16,7 +16,7 @@ object GitHubAssetResolver {
      * If the decade folder doesn't exist (pre-1890), it falls back to the 1890s pool.
      */
     fun imageForYear(year: Int, index: Int = 0): String {
-        val eraPath = if (year < 1963) "Pre%20Independence%20Kenya" else "Post%20Independence%20Kenya"
+        val eraPath = if (year < 1963) "Pre Independence Kenya" else "Post Independence Kenya"
         val decade = (year / 10) * 10
         val decadeStr = "${decade}s"
         
@@ -29,12 +29,11 @@ object GitHubAssetResolver {
             ?: emptyList()
             
         if (files.isEmpty()) {
-             // Absolute safety fallback
-             return "$BASE/images/Pre%20Independence%20Kenya/1910s/Kenya-Tribes.webp"
+             return encodeUrl("images/Pre Independence Kenya/1910s/Kenya-Tribes.webp")
         }
         
         val fileName = files[index % files.size]
-        return "$BASE/images/${eraPath}/${decadeStr}/$fileName"
+        return encodeUrl("images/$eraPath/$decadeStr/$fileName")
     }
 
     /**
@@ -45,23 +44,25 @@ object GitHubAssetResolver {
             fileName.startsWith(year.toString()) || 
             (year in 1952..1960 && fileName.contains("Mau Mau", ignoreCase = true)) ||
             (year in 1950..1959 && fileName.contains("1950", ignoreCase = true))
-        }.map { "$BASE/videos/${it.replace(" ", "%20")}" }
+        }.map { encodeUrl("videos/$it") }
     }
 
     /**
-     * Returns a specific image from a decade folder.
+     * Encodes a partial path into a full GitHub raw URL.
+     * Prevents double-encoding by taking raw strings and applying %20 only once.
      */
-    fun specificImage(year: Int, fileNameWithExtension: String): String {
-        val era = if (year < 1963) "Pre%20Independence%20Kenya" else "Post%20Independence%20Kenya"
-        val decade = (year / 10) * 10
-        val encodedFile = fileNameWithExtension.replace(" ", "%20").replace("(", "%20(").replace(")", ")")
-        return "$BASE/images/$era/${decade}s/$encodedFile"
+    private fun encodeUrl(partialPath: String): String {
+        val encoded = partialPath
+            .replace(" ", "%20")
+            .replace("(", "%28")
+            .replace(")", "%29")
+        return "$BASE/$encoded"
     }
 
     /**
      * Returns the GitHub raw video URL for a given video filename.
      */
-    fun videoUrl(filename: String): String = "$BASE/videos/${filename.replace(" ", "%20")}"
+    fun videoUrl(filename: String): String = encodeUrl("videos/$filename")
 
     /**
      * Attempts to find a video for a year or keyword.

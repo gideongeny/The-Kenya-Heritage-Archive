@@ -37,9 +37,12 @@ class HistoryViewModel @Inject constructor(
             val count = repository.count()
             // Detect 'stale' or incomplete local data and force a refresh to sync with GitHub
             val isStale = if (count > 0) {
-                val sample = repository.getArtifactsByRange(1960, 1965).first().firstOrNull()
-                // If the data doesn't contain GitHub URLs, it's stale
-                sample != null && sample.bannerImageUrl?.contains("raw.githubusercontent") == false
+                // FORCE REFRESH: Check if the 'Manifest Era' landmark (1729 Milestome) exists
+                // If it doesn't, we are using the old seeder and need to wipe.
+                val landmark = repository.getArtifactsByRange(1720, 1730).first().firstOrNull() {
+                    it.id == "portuguese_expulsion_1729"
+                }
+                landmark == null
             } else false
 
             if (count == 0 || isStale) {
