@@ -135,6 +135,66 @@ object HistoricalSeeder {
             fun_ = "🤯 Fun Fact: The final survivor of the siege was a brave African woman who reportedly fought alongside the soldiers until the very end!"
         ),
         artifact(
+            id = "portuguese_expulsion_1729",
+            title = "The Final Departure: 1729",
+            year = 1729,
+            period = "Early 18th Century",
+            epoch = "The Era of Coastal Dynasties",
+            banner = GitHubAssetResolver.imageForYear(1720),
+            images = (0..3).map { GitHubAssetResolver.imageForYear(1720, it) },
+            decade = "In 1729, the Portuguese made one last desperate attempt to retake Mombasa. They were decisively defeated by Omani forces and local Swahili allies, marking the permanent end of Portuguese rule in Kenya.",
+            narrative = """
+                The early 1700s were a time of intense power struggle on the Kenyan coast. Though the Portuguese had been ousted in 1698, they briefly returned in 1728, taking advantage of local civil strife.
+                
+                However, their return was short-lived. In 1729, a unified force of Omani soldiers and local Mombasa warriors drove them back to the sea for the final time. 
+                
+                This victory ushered in the era of the 'Mazrui' governors—a dynasty that would rule Mombasa with fierce independence for over a century, often challenging the Sultan of Oman himself. This period saw the coast flourish as an independent cultural and commercial hub.
+            """.trimIndent(),
+            foreign = "The Mazrui governors became so integrated into Kenyan coastal life that they were seen as local Swahili leaders rather than foreign occupiers.",
+            significant = "1729 marks the absolute end of the first European colonial attempt in Kenya.",
+            fun_ = "🤯 Fun Fact: The final defeat of the Portuguese was triggered by a food shortage within the fort combined with a surprise attack during a torrential downpour!"
+        ),
+        artifact(
+            id = "mazrui_rebellion_1824",
+            title = "The Rebel City: Owen's Protectorate",
+            year = 1824,
+            period = "Early 19th Century",
+            epoch = "The Age of Empire Seeds",
+            banner = GitHubAssetResolver.imageForYear(1820),
+            images = (0..4).map { GitHubAssetResolver.imageForYear(1820, it) },
+            decade = "In 1824, the Mazrui rulers of Mombasa took an extraordinary gamble: they invited the British Navy to protect them from the Sultan of Oman, leading to the short-lived 'Owen's Protectorate'.",
+            narrative = """
+                By the 1820s, the rivalry between the Mazrui of Mombasa and the Busaidi Sultans of Oman had reached a boiling point. Desperate to maintain their independence, the Mazrui appealed to Captain William Owen of the HMS Leven.
+                
+                Without official permission from London, Owen declared Mombasa a British protectorate and hoisted the Union Jack over Fort Jesus. For two years, Mombasa was technically a British territory—the first such entity in East Africa.
+                
+                However, the British government in London, wishing to stay on good terms with the Sultan of Oman, eventually ordered the flag lowered and the protectorate abandoned in 1826. It was a brief, weird precursor to the official colonial era that would follow decades later.
+            """.trimIndent(),
+            foreign = "Captain Owen was an ardent abolitionist who declared the protectorate partly to stop the slave trade in the Mombasa harbour.",
+            significant = "This was the first time a British flag was officially raised over a Kenyan building with the consent of local leaders.",
+            fun_ = "🤯 Fun Fact: Captain Owen was so committed to Mombasa that he actually began building a school and a mission before being ordered to leave!"
+        ),
+        artifact(
+            id = "sultan_said_1840",
+            title = "The Zanzibar Shift: Era of Caravans",
+            year = 1840,
+            period = "Mid 19th Century",
+            epoch = "The Golden Age of Trade",
+            banner = GitHubAssetResolver.imageForYear(1840),
+            images = (0..5).map { GitHubAssetResolver.imageForYear(1840, it) },
+            decade = "In 1840, Sultan Seyyid Said moved his capital from Muscat in Oman to the island of Zanzibar, triggering a massive expansion of trade caravans deep into the Kenyan interior.",
+            narrative = """
+                Sultan Seyyid Said's move to Zanzibar in 1840 changed Kenya's geography forever. He realized the immense wealth of the East African interior and commercialized the caravan trade.
+                
+                Great caravans of hundreds of porters began trekking from the coast into the heart of Kenya, reaching as far as Mount Kenya and the Great Rift Valley. They traded for ivory and hides, spreading Swahili culture and language deep into the interior.
+                
+                This era also saw the introduction of global crops like cloves to Zanzibar and the intensification of the trade routes that the British would later follow to build the railway. Kenya was becoming more connected to the global economy than ever before.
+            """.trimIndent(),
+            foreign = "Seyyid Said is credited with transforming the East African coast into the world's leading producer of cloves.",
+            significant = "1840 marks the point where the Kenyan interior became systematically linked to international maritime trade routes.",
+            fun_ = "🤯 Fun Fact: The Sultan was so fond of Zanzibar's climate that he reportedly brought thousands of fruit trees from Oman to plant on the islands!"
+        ),
+        artifact(
             id = "missionary_start_1844",
             title = "Krapf & The First Mission: Rabai",
             year = 1844,
@@ -153,6 +213,26 @@ object HistoricalSeeder {
             foreign = "Rabai, near Mombasa, is home to the first church ever built in Kenya, and you can still visit Krapf's original house today.",
             significant = "The first Swahili-English dictionary was produced in Rabai, bridging the gap between two cultures.",
             fun_ = "🤯 Fun Fact: Krapf was so dedicated to his Swahili dictionary that he reportedly wrote parts of it while suffering from 12 severe bouts of malaria!"
+        ),
+        artifact(
+            id = "freretown_1873",
+            title = "The Struggle for Freedom: Freretown",
+            year = 1873,
+            period = "Late 19th Century",
+            epoch = "The Twilight of Slavery",
+            banner = GitHubAssetResolver.imageForYear(1870),
+            images = (0..2).map { GitHubAssetResolver.imageForYear(1870, it) },
+            decade = "In 1873, the Sultan of Zanzibar was forced by the British to sign a treaty officially abolishing the slave trade. This led to the founding of Freretown in Mombasa as a home for 'Bombay Africans'—freed slaves.",
+            narrative = """
+                The 1870s were a time of profound moral and social upheaval. After decades of pressure, the maritime slave trade on the East African coast was legally abolished in 1873.
+                
+                Freretown was established near Mombasa as a sanctuary for former slaves who had been intercepted by the British Navy. These 'Bombay Africans'—named because they had been trained in India—brought new skills in masonry, carpentry, and agriculture.
+                
+                They formed a unique, literate, and highly skilled community that would play a significant role in early Kenyan history, becoming some of the first clerks, printers, and teachers in the developing protectorate.
+            """.trimIndent(),
+            foreign = "Freretown remains a distinct community in Mombasa today, with descendants still preserving the history of their ancestors.",
+            significant = "1873 marks the legal death of the open slave trade in East Africa, a major turning point for human rights in the region.",
+            fun_ = "🤯 Fun Fact: The Freretown church, built in the 1880s, still rings its original bell today—a bell that once sounded to signify every hour of freedom!"
         ),
         artifact(
             id = "ibeac_charter_1888",

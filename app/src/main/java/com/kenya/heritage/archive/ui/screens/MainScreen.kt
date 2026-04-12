@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.kenya.heritage.archive.data.model.AssetType
 import com.kenya.heritage.archive.data.model.HistoricalArtifact
+import com.kenya.heritage.archive.data.util.GitHubAssetResolver
 import com.kenya.heritage.archive.ui.components.TimelineScrubber
 import com.kenya.heritage.archive.ui.util.VideoThumbnailLoader
 import com.kenya.heritage.archive.ui.viewmodel.HistoryViewModel
@@ -111,7 +112,7 @@ fun MainScreen(viewModel: HistoryViewModel) {
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     item {
-                        EraOfTheDayCard(uiState.featuredArtifact)
+                        EraOfTheDayCard(uiState.featuredArtifact, uiState.currentYear)
                     }
 
                     // NEW: Proactive Video Discovery Prompt
@@ -227,54 +228,52 @@ fun MainScreen(viewModel: HistoryViewModel) {
 }
 
 @Composable
-fun EraOfTheDayCard(artifact: HistoricalArtifact?) {
-    val title = artifact?.title ?: "The Dawn of the Swahili Civilisation"
-    val subtitle = artifact?.period ?: "11th Century · Pre-Colonial Kenya"
-    val bannerUrl = artifact?.bannerImageUrl
-
+fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
+    val title = artifact?.title ?: when {
+        currentYear < 1500 -> "The Dawn of the Swahili Civilisation"
+        currentYear < 1700 -> "The Age of Resistance & Forts"
+        currentYear < 1895 -> "The Era of Coastal Dynasties"
+        currentYear < 1963 -> "The Colonial Struggle"
+        else -> "The Modern Republic"
+    }
+    val subtitle = if (artifact != null) {
+        "${artifact.period} • ${artifact.historicalEpoch}"
+    } else {
+        "${(currentYear / 100) + 1}${getCenturySuffix((currentYear / 100) + 1)} Century • Kenya Heritage"
+    }
+    
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(240.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+            .height(220.dp),
+        shape = MaterialTheme.shapes.large,
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1A1A1A))
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
-            // Background: GitHub-hosted era image
-            if (!bannerUrl.isNullOrBlank()) {
-                AsyncImage(
-                    model = bannerUrl,
-                    contentDescription = "Era Banner",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-            } else {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            Brush.verticalGradient(
-                                colors = listOf(Color(0xFF2D1F0A), Color(0xFF1A1A1A))
-                            )
-                        )
-                )
-            }
-
-            // Gradient overlay for readability
+            AsyncImage(
+                model = artifact?.bannerImageUrl ?: GitHubAssetResolver.imageForYear(currentYear),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
+                alpha = 0.4f
+            )
+            
+            // Gradient Overlay
             Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.9f)),
-                            startY = 80f
+                            colors = listOf(Color.Transparent, Color.Black.copy(alpha = 0.8f))
                         )
                     )
             )
-
+            
             Column(
                 modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(20.dp)
+                    .fillMaxSize()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.Bottom
             ) {
                 Surface(
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.25f),
@@ -301,18 +300,17 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?) {
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)
                 )
-                if (!artifact?.decadeDescription.isNullOrBlank()) {
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = artifact?.decadeDescription ?: "",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = Color.White.copy(alpha = 0.75f),
-                        maxLines = 2,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                }
             }
         }
+    }
+}
+
+private fun getCenturySuffix(century: Int): String {
+    return when (century % 10) {
+        1 -> "st"
+        2 -> "nd"
+        3 -> "rd"
+        else -> "th"
     }
 }
 

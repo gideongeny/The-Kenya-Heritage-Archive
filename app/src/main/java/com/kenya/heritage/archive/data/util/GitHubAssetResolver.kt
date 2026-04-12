@@ -15,16 +15,18 @@ object GitHubAssetResolver {
         val era = if (year < 1963) "Pre%20Independence%20Kenya" else "Post%20Independence%20Kenya"
         val decade = (year / 10) * 10
         
-        // We cycle through standard filenames provided by the user (download, images, etc.)
-        val filePatterns = listOf(
-            "download.jpg", "images.jpg", 
-            "download%20(1).jpg", "images%20(1).jpg",
-            "download%20(2).jpg", "images%20(2).jpg",
-            "download%20(3).jpg", "images%20(3).jpg",
-            "Kenya-Tribes.webp"
-        )
-        val fileName = filePatterns[index % filePatterns.size]
+        // Comprehensive list of common filename patterns found in the repository
+        val filePatterns = buildList {
+            add("download.jpg")
+            add("images.jpg")
+            for (i in 1..20) {
+                add("download%20($i).jpg")
+                add("images%20($i).jpg")
+            }
+            add("Kenya-Tribes.webp")
+        }
         
+        val fileName = filePatterns[index % filePatterns.size]
         return "$BASE/images/$era/${decade}s/$fileName"
     }
 
