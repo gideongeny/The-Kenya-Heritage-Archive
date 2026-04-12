@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kenya.heritage.archive.data.model.HistoricalArtifact
 import com.kenya.heritage.archive.data.repository.ArtifactRepository
+import com.kenya.heritage.archive.data.util.GitHubAssetResolver
 import com.kenya.heritage.archive.data.util.HistoricalSeeder
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -14,6 +15,8 @@ data class HistoryUiState(
     val currentYear: Int = 1963,
     val artifacts: List<HistoricalArtifact> = emptyList(),
     val featuredArtifact: HistoricalArtifact? = null,
+    val decadePhotos: List<String> = emptyList(),
+    val decadeVideos: List<Pair<Int, String>> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )
@@ -70,7 +73,13 @@ class HistoryViewModel @Inject constructor(
         viewModelScope.launch {
             // Update the list of artifacts for the specific year range
             repository.getArtifactsByRange(year - 10, year + 10).collect { list ->
-                _uiState.update { it.copy(artifacts = list) }
+                _uiState.update { 
+                    it.copy(
+                        artifacts = list,
+                        decadePhotos = GitHubAssetResolver.getImagesForDecade(year),
+                        decadeVideos = GitHubAssetResolver.getVideosForDecade(year)
+                    ) 
+                }
             }
         }
         

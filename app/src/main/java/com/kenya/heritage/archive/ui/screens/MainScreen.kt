@@ -115,47 +115,27 @@ fun MainScreen(viewModel: HistoryViewModel) {
                         EraOfTheDayCard(uiState.featuredArtifact, uiState.currentYear)
                     }
 
-                    // NEW: Proactive Video Discovery Prompt
-                    val videoArtifact = uiState.artifacts.find { art -> 
-                        art.year == uiState.currentYear && art.mediaAssets.any { it.type == AssetType.VIDEO }
-                    }
-                    if (videoArtifact != null) {
+                    // NEW: Decade Media Galleries (Photos and Videos Separate)
+                    if (uiState.decadePhotos.isNotEmpty() || uiState.decadeVideos.isNotEmpty()) {
                         item {
-                            Surface(
-                                modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
-                                shape = MaterialTheme.shapes.medium,
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)),
-                                onClick = { selectedArtifactForVault = videoArtifact }
-                            ) {
-                                Row(
-                                    modifier = Modifier.padding(16.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Box(
-                                        modifier = Modifier
-                                            .size(40.dp)
-                                            .background(MaterialTheme.colorScheme.primary, CircleShape),
-                                        contentAlignment = Alignment.Center
-                                    ) {
-                                        Icon(Icons.Default.PlayArrow, null, tint = Color.Black)
-                                    }
-                                    Spacer(modifier = Modifier.width(16.dp))
-                                    Column {
-                                        Text(
-                                            "Watch ${uiState.currentYear} Archive",
-                                            style = MaterialTheme.typography.titleMedium,
-                                            color = Color.White,
-                                            fontWeight = FontWeight.Bold
-                                        )
-                                        Text(
-                                            "Archival footage discovered in the vault",
-                                            style = MaterialTheme.typography.bodySmall,
-                                            color = Color.LightGray
-                                        )
-                                    }
+                            DecadeMediaSection(
+                                year = uiState.currentYear,
+                                photos = uiState.decadePhotos,
+                                videos = uiState.decadeVideos,
+                                onMediaClick = { type, url ->
+                                    // Map to a dummy artifact for the vault to display
+                                    val dummy = HistoricalArtifact(
+                                        id = "temp_media",
+                                        title = "Archival Discovery",
+                                        year = uiState.currentYear,
+                                        period = "Vault Asset",
+                                        deepNarrative = "Discovering rare media from the archive.",
+                                        category = com.kenya.heritage.archive.data.model.HistoricalCategory.CULTURAL,
+                                        mediaAssets = listOf(com.kenya.heritage.archive.data.model.MediaAsset(url, type))
+                                    )
+                                    selectedArtifactForVault = dummy
                                 }
-                            }
+                            )
                         }
                     }
 
@@ -251,7 +231,9 @@ fun EraOfTheDayCard(artifact: HistoricalArtifact?, currentYear: Int = 1963) {
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
-                model = artifact?.bannerImageUrl ?: GitHubAssetResolver.imageForYear(currentYear),
+                model = artifact?.bannerImageUrl 
+                    ?: GitHubAssetResolver.getImagesForDecade(currentYear).firstOrNull() 
+                    ?: GitHubAssetResolver.imageForYear(currentYear),
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
@@ -560,6 +542,125 @@ fun ArtifactCard(
                             )
                             Spacer(modifier = Modifier.width(6.dp))
                             Text("ENTER THE VAULT")
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun DecadeMediaSection(
+    year: Int,
+    photos: List<String>,
+    videos: List<Pair<Int, String>>,
+    onMediaClick: (AssetType, String) -> Unit
+) {
+    val decade = (year / 10) * 10
+    
+    Column(modifier = Modifier.fillMaxWidth()) {
+        if (photos.isNotEmpty()) {
+            Text(
+                text = "Archival Photos of the ${decade}s",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                ),
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            MediaHorizontalGallery(
+                items = photos,
+                type = AssetType.IMAGE,
+                onItemClick = { url -> onMediaClick(AssetType.IMAGE, url) }
+            )
+            Spacer(modifier = Modifier.height(24.dp))
+        }
+        
+        if (videos.isNotEmpty()) {
+            Text(
+                text = "Annual Chronicles of the ${decade}s",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    letterSpacing = 1.sp
+                ),
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            MediaHorizontalGallery(
+                videoItems = videos,
+                type = AssetType.VIDEO,
+                onItemClick = { url -> onMediaClick(AssetType.VIDEO, url) }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+        }
+    }
+}
+
+@Composable
+fun MediaHorizontalGallery(
+    items: List<String> = emptyList(),
+    videoItems: List<Pair<Int, String>> = emptyList(),
+    type: AssetType,
+    onItemClick: (String) -> Unit
+) {
+    androidx.compose.foundation.lazy.LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(14.dp),
+        contentPadding = PaddingValues(end = 16.dp)
+    ) {
+        if (type == AssetType.IMAGE) {
+            items(items) { url ->
+                Card(
+                    modifier = Modifier
+                        .size(200.dp, 120.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    onClick = { onItemClick(url) }
+                ) {
+                    AsyncImage(
+                        model = url,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+            }
+        } else {
+            items(videoItems) { (year, url) ->
+                Card(
+                    modifier = Modifier
+                        .size(200.dp, 120.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                    onClick = { onItemClick(url) }
+                ) {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(
+                                    Brush.verticalGradient(
+                                        listOf(Color(0xFF2D2D2D), Color.Black)
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                Icon(
+                                    imageVector = Icons.Default.PlayArrow, 
+                                    contentDescription = null, 
+                                    tint = MaterialTheme.colorScheme.primary,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = year.toString(),
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.ExtraBold
+                                )
+                            }
                         }
                     }
                 }

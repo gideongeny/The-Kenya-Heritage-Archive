@@ -48,6 +48,45 @@ object GitHubAssetResolver {
     }
 
     /**
+     * Retrieves all videos for a decade, precisely parsed by year and sorted.
+     * Returns List<Pair<Year, URL>>
+     */
+    fun getVideosForDecade(year: Int): List<Pair<Int, String>> {
+        val decade = (year / 10) * 10
+        val decadeRange = decade..(decade + 9)
+        
+        return MediaManifest.allVideos.mapNotNull { fileName ->
+            val videoYear = fileName.take(4).toIntOrNull()
+            if (videoYear != null && videoYear in decadeRange) {
+                videoYear to encodeUrl("videos/$fileName")
+            } else if (fileName.contains("${decade}s") || 
+                (decade == 1950 && fileName.contains("Mau Mau", ignoreCase = true))) {
+                // Fallback for keyword matches in decade
+                decade to encodeUrl("videos/$fileName")
+            } else {
+                null
+            }
+        }.sortedBy { it.first }
+    }
+
+    /**
+     * Retrieves all archival photos for a specific decade folder.
+     */
+    fun getImagesForDecade(year: Int): List<String> {
+        val decade = (year / 10) * 10
+        val decadeStr = "${decade}s"
+        val eraKey = if (year < 1963) "Pre Independence Kenya" else "Post Independence Kenya"
+        val eraPath = if (year < 1963) "Pre Independence Kenya" else "Post Independence Kenya"
+        val folderKey = "$eraKey/$decadeStr"
+        
+        val files = MediaManifest.imagesByDecade[folderKey] 
+            ?: MediaManifest.imagesByDecade["Pre Independence Kenya/1890s"] 
+            ?: emptyList()
+            
+        return files.map { encodeUrl("images/$eraPath/$decadeStr/$it") }
+    }
+
+    /**
      * Encodes a partial path into a full GitHub raw URL.
      * Prevents double-encoding by taking raw strings and applying %20 only once.
      */
