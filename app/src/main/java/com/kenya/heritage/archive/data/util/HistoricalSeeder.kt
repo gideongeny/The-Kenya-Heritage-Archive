@@ -25,7 +25,7 @@ object HistoricalSeeder {
             period = "11th – 15th Century",
             epoch = "Pre-Colonial Statehood",
             banner = GitHubAssetResolver.imageForYear(1100),
-            images = listOf(1100, 1200, 1300).map { GitHubAssetResolver.imageForYear(it) },
+            images = (1100..1150 step 10).map { GitHubAssetResolver.imageForYear(it) },
             decade = "The 11th century saw the coastal city-states of Mombasa, Lamu, Malindi and Pate emerge as powerhouses of global trade. Arab, Persian, Indian, and Chinese merchants anchored in our harbours, exchanging silks and porcelain for our ivory, gold and iron.",
             narrative = """
                 Long before the first European sails appeared on our horizon, the coast of Kenya was already a global center of sophistication, wealth, and faith. From Lamu to Malindi, our ancestors built stone cities that rivaled those of the Mediterranean.
@@ -45,7 +45,7 @@ object HistoricalSeeder {
             period = "14th – 17th Century",
             epoch = "Interior Civilisations",
             banner = GitHubAssetResolver.imageForYear(1400),
-            images = listOf(GitHubAssetResolver.imageForYear(1400)),
+            images = (1400..1500 step 20).map { GitHubAssetResolver.imageForYear(it) },
             decade = "While the Swahili Coast thrived, the interior of Kenya was alive with powerful communities — the Kikuyu farming the fertile ridges, the Maasai commanding vast pasturelands, and the Luo migrating southward from the Nile basin.",
             narrative = """
                 The interior of Kenya in the 14th to 17th centuries was not empty wilderness — it was a dynamic world of kingdoms, councils and migrations. The Kikuyu, guided by their age-set system and the wisdom of the Kiama (council of elders), transformed the fertile slopes of Mount Kenya into productive agricultural heartlands.
@@ -88,7 +88,7 @@ object HistoricalSeeder {
             period = "1900 - 1909",
             epoch = "Early Colonial Era",
             banner = GitHubAssetResolver.imageForDecade(1900),
-            images = listOf(GitHubAssetResolver.imageForYear(1901)),
+            images = (1900..1909).map { GitHubAssetResolver.imageForYear(it) },
             decade = "The turn of the century saw the British consolidate their control through the Uganda Railway, as Nairobi transformed from a swampy depot into a burgeoning colonial town.",
             narrative = "The first decade of the 1900s was a period of profound transition. While the British East Africa Protectorate was formally established, the indigenous communities faced the sudden reality of land alienation. Nairobi, known as 'Enkare Nyrobi' (Place of Cool Waters) by the Maasai, was becoming the administrative heart of a new empire. This decade saw the introduction of the first currency, the Indian Rupee, and the arrival of thousands of Indian laborers who would build the backbone of the nation's infrastructure.",
             foreign = "The name 'Nairobi' comes from the Maasai phrase 'Enkare Nyrobi', which means 'cool water', referring to the Nairobi River that once flowed freely through the swampy landscape.",
@@ -187,7 +187,12 @@ object HistoricalSeeder {
             period = "1952 – 1960",
             epoch = "The Road to Freedom",
             banner = GitHubAssetResolver.imageForYear(1952),
-            images = listOf(1952, 1953, 1956, 1958).map { GitHubAssetResolver.imageForYear(it) },
+            images = (1952..1959).map { GitHubAssetResolver.imageForYear(it) },
+            videos = listOf(
+                "Capture of Dedan Kimathi _ _Mau Mau_ Leader _ Kenya Land and Freedom Army (KLFA) _ October 1956.mp4",
+                "Selected Originals - Mau Mau - Lari Massacre Trial (1953).mp4",
+                "Amnesty offer to maumau.mp4"
+            ),
             decade = "The 1950s were Kenya's most turbulent decade — a decade of fire, sacrifice, and the sacred oath of freedom. The Mau Mau uprising shook the British Empire to its core.",
             narrative = """
                 In the misty, silent depths of the Aberdare and Mount Kenya forests, a fire was lit that could never be extinguished. Our fathers and mothers, labeled 'terrorists' by an empire that had stolen their land and dignity, rose up as the Kenya Land and Freedom Army.
@@ -213,7 +218,11 @@ object HistoricalSeeder {
             period = "December 12, 1963",
             epoch = "The First Republic",
             banner = GitHubAssetResolver.imageForYear(1963),
-            images = listOf(GitHubAssetResolver.imageForYear(1963), GitHubAssetResolver.imageForYear(1964)),
+            images = listOf(
+                GitHubAssetResolver.imageForYear(1963),
+                GitHubAssetResolver.imageForYear(1964)
+            ),
+            videos = listOf("1963 _ 50 years of Independence _ Kenya History and Biographies.mp4"),
             isFeatured = true,
             decade = "The 1960s were Kenya's foundational decade — the birth of a nation. From the midnight lowering of the Union Jack to the first bold steps of an infant republic finding its voice in Africa.",
             narrative = """
@@ -234,7 +243,11 @@ object HistoricalSeeder {
             period = "1970 – 1979",
             epoch = "The First Republic",
             banner = GitHubAssetResolver.imageForYear(1970),
-            images = listOf(1970, 1973, 1977, 1979).map { GitHubAssetResolver.imageForYear(it) },
+            images = (1970..1978).map { GitHubAssetResolver.imageForYear(it) },
+            videos = listOf(
+                "Rare Raw Footage Nairobi, Kenya in 1968 Archival Film.mp4",
+                "Kenya 1960s life.mp4"
+            ),
             decade = "The 1970s were Kenya's decade of national construction — universities, hospitals, roads and factories sprang up across the country. Nairobi became an African metropolis, the economic hub of East Africa.",
             narrative = """
                 By the early 1970s, Kenya was the envy of East Africa. A booming tourism industry, a productive agricultural sector, and a growing infrastructure network made Nairobi the regional capital of commerce and culture.
@@ -254,7 +267,8 @@ object HistoricalSeeder {
             period = "1980 – 1989",
             epoch = "The Moi Era",
             banner = GitHubAssetResolver.imageForYear(1982),
-            images = listOf(1980, 1982, 1986, 1989).map { GitHubAssetResolver.imageForYear(it) },
+            images = (1980..1989).map { GitHubAssetResolver.imageForYear(it) },
+            videos = listOf("1982 _ 50 years of Independence _ Kenya History and Biographies.mp4"),
             decade = "The 1980s were Kenya's most politically charged decade before independence. A coup attempt, tightening one-party rule, and the rise of pro-democracy voices shaped a nation coming of age.",
             narrative = """
                 On August 1, 1982, a group of Kenya Air Force officers launched a coup against President Moi. For several terrifying hours, Kenyans didn't know the fate of their government. Regular army troops crushed the rebellion by evening. The entire Kenya Air Force was disbanded and rebuilt from scratch.
@@ -280,7 +294,8 @@ object HistoricalSeeder {
             period = "1991 – 2002",
             epoch = "The Democratic Transition",
             banner = GitHubAssetResolver.imageForYear(1991),
-            images = listOf(1991, 1992, 1997, 2002).map { GitHubAssetResolver.imageForYear(it) },
+            images = (1990..2002 step 2).map { GitHubAssetResolver.imageForYear(it) },
+            videos = listOf("1991 _ 50 years of Independence _ Kenya History and Biographies.mp4"),
             decade = "The 1990s were Kenya's decade of political awakening — the fierce, courageous fight for multiparty democracy against an entrenched single-party state. It was Kenya's second liberation.",
             narrative = """
                 By 1990, the winds of change were blowing across Africa. In Kenya, brave souls — lawyers, bishops, professors — stood before Moi's government demanding freedom of speech and multiparty politics. Professor Wangari Maathai, later to win the Nobel Peace Prize, was tear-gassed. Politician Kenneth Matiba suffered a stroke in detention.
@@ -300,7 +315,8 @@ object HistoricalSeeder {
             period = "2010",
             epoch = "The Democratic Republic",
             banner = GitHubAssetResolver.imageForYear(2010),
-            images = listOf(GitHubAssetResolver.imageForYear(2010)),
+            images = listOf(GitHubAssetResolver.imageForYear(2010), GitHubAssetResolver.imageForYear(2011)),
+            videos = listOf("2010 _ 50 years of Independence _ Kenya History and Biographies.mp4"),
             decade = "The 2010 Constitution was Kenya's most ambitious political achievement since independence — rewriting the rules of governance, enshrining rights, and creating devolution that took power to the grassroots.",
             narrative = """
                 On August 4, 2010, Kenyans voted overwhelmingly — 67% — in favour of a new constitution that would reshape their nation. Born from the painful ashes of the 2007–2008 post-election violence that killed over 1,300 and displaced 600,000, this new constitutional order was a promise to themselves: never again.
@@ -378,6 +394,7 @@ object HistoricalSeeder {
         significant: String,
         fun_: String,
         isFeatured: Boolean = false,
+        videos: List<String> = emptyList(),
         category: HistoricalCategory = HistoricalCategory.POLITICAL
     ) = HistoricalArtifact(
         id = id,
@@ -395,6 +412,7 @@ object HistoricalSeeder {
         longitude = 36.817222,
         category = category,
         isFeatured = isFeatured,
-        mediaAssets = images.map { MediaAsset(it, AssetType.IMAGE) }
+        mediaAssets = images.map { MediaAsset(it, AssetType.IMAGE) } + 
+                videos.map { MediaAsset(GitHubAssetResolver.videoUrl(it), AssetType.VIDEO) }
     )
 }

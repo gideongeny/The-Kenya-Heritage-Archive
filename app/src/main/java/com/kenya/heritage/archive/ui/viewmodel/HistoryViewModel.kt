@@ -35,7 +35,15 @@ class HistoryViewModel @Inject constructor(
     private fun seedIfEmpty() {
         viewModelScope.launch {
             val count = repository.count()
-            if (count == 0) {
+            // Detect 'stale' or incomplete local data and force a refresh to sync with GitHub
+            val isStale = if (count > 0) {
+                val sample = repository.getArtifactsByRange(1960, 1965).first().firstOrNull()
+                // If the data doesn't contain GitHub URLs, it's stale
+                sample != null && sample.bannerImageUrl?.contains("raw.githubusercontent") == false
+            } else false
+
+            if (count == 0 || isStale) {
+                if (isStale) repository.refreshArtifacts() // Clears the DB
                 val seed = HistoricalSeeder.getDeepHeritageStitch()
                 repository.insertSeeds(seed)
             }
