@@ -168,7 +168,7 @@ fun VaultGallery(
                         color = Color.LightGray
                     )
                     Text(
-                        text = artifact.foreignerTips,
+                        text = artifact.foreignerTips ?: "",
                         style = MaterialTheme.typography.bodySmall,
                         color = Color.LightGray
                     )
