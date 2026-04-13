@@ -55,6 +55,7 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
     val context = LocalContext.current
     var isForeignerGuideEnabled by remember { mutableStateOf(false) }
     var showPrivacyPolicy by remember { mutableStateOf(false) }
+    var showAboutDialog by remember { mutableStateOf(false) }
     var showMenu by remember { mutableStateOf(false) }
     var showLanguageSubMenu by remember { mutableStateOf(false) }
 
@@ -183,6 +184,14 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                                     onClick = {
                                         showMenu = false
                                         showPrivacyPolicy = true
+                                    }
+                                )
+                                // About the Archive
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.menu_about)) },
+                                    onClick = {
+                                        showMenu = false
+                                        showAboutDialog = true
                                     }
                                 )
                             }
@@ -339,6 +348,33 @@ fun MainScreen(viewModel: HistoryViewModel, onNavigateToSearch: () -> Unit = {},
                     onClose = { selectedArtifactForVault = null }
                 )
             }
+        }
+        // About the Archive - Gideon Ngeno's Testament
+        if (showAboutDialog) {
+            AlertDialog(
+                onDismissRequest = { showAboutDialog = false },
+                title = {
+                    Text(
+                        text = stringResource(R.string.about_title),
+                        style = MaterialTheme.typography.headlineSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                },
+                text = {
+                    Text(
+                        text = stringResource(R.string.about_message),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = Color.White
+                    )
+                },
+                confirmButton = {
+                    TextButton(onClick = { showAboutDialog = false }) {
+                        Text("Mbele Pamoja (Forward Together)", color = MaterialTheme.colorScheme.primary)
+                    }
+                },
+                containerColor = Color(0xFF1A1A1A),
+                textContentColor = Color.White
+            )
         }
     }
 }

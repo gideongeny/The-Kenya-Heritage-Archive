@@ -14,6 +14,7 @@
     <string name="menu_download_syncing">Syncing… %1$d%%</string>
     <string name="menu_foreigners_guide">🌍  Foreigner\'s Guide</string>
     <string name="menu_privacy_policy">🔒  Privacy Policy</string>
+    <string name="menu_about">📜  About the Archive</string>
     <string name="menu_language">🌐  Change Language</string>
     <string name="menu_language_english">🇬🇧  English</string>
     <string name="menu_language_swahili">🇰🇪  Kiswahili</string>
@@ -56,6 +57,8 @@
 
     <!-- Privacy Screen -->
     <string name="privacy_screen_title">Privacy Policy</string>
+    <string name="about_title">Gideon Ngeno\'s Testament</string>
+    <string name="about_message">I, Gideon Ngeno, created the Kenya Heritage Archive as a testament to my love for Kenya and its people. Our history is our strength. \n\nThis archive serves as a digital lighthouse to preserve our identity, celebrate our ancestors, and inspire future generations to cherish the land of the brave. \n\nHarambee! 🇰🇪</string>
     <string name="privacy_title_1">1. Introduction</string>
     <string name="privacy_content_1">The Kenya Heritage Archive is dedicated to preserving and celebrating Kenyan history. This Privacy Policy describes how we handle information in our application.</string>
     <string name="privacy_title_2">2. Data Collection</string>

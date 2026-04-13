@@ -14,6 +14,7 @@
     <string name="menu_download_syncing">Inapakua… %1$d%%</string>
     <string name="menu_foreigners_guide">🌍  Mwelekeo kwa Wageni</string>
     <string name="menu_privacy_policy">🔒  Sera ya Faragha</string>
+    <string name="menu_about">📜  Kuhusu Hazina Hii</string>
     <string name="menu_language">🌐  Badilisha Lugha</string>
     <string name="menu_language_english">🇬🇧  Kiingereza</string>
     <string name="menu_language_swahili">🇰🇪  Kiswahili</string>
@@ -56,6 +57,8 @@
 
     <!-- Privacy Screen -->
     <string name="privacy_screen_title">Sera ya Faragha</string>
+    <string name="about_title">Wosia wa Gideon Ngeno</string>
+    <string name="about_message">Mimi, Gideon Ngeno, niliunda Kumbukumbu ya Urithi wa Kenya kama ushahidi wa upendo wangu kwa Kenya na watu wake. Historia yetu ndio nguvu yetu. \n\nKumbukumbu hii inatumika kama mnara wa kidijitali kuhifadhi utambulisho wetu, kusherehekea babu zetu, na kuwahimiza vizazi vijavyo kuthamini nchi ya mashujaa. \n\nHarambee! 🇰🇪</string>
     <string name="privacy_title_1">1. Utangulizi</string>
     <string name="privacy_content_1">Kumbukumbu ya Urithi wa Kenya imejitolea kuhifadhi na kusherehekea historia ya Kenya. Sera hii ya Faragha inaelezea jinsi tunavyoshughulikia habari katika programu yetu.</string>
     <string name="privacy_title_2">2. Ukusanyaji wa Data</string>
